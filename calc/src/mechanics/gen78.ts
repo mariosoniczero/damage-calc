@@ -26,6 +26,7 @@ import {
   checkKlutz,
   checkMultihitBoost,
   checkSeedBoost,
+  checkTerrify,
   computeFinalStats,
   countBoosts,
   getBaseDamage,
@@ -62,6 +63,8 @@ export function calculateSMSS(
 
   checkIntimidate(gen, attacker, defender);
   checkIntimidate(gen, defender, attacker);
+  checkTerrify(gen, attacker, defender);
+  checkTerrify(gen, defender, attacker);
   checkDownload(attacker, defender);
   checkDownload(defender, attacker);
   checkIntrepidSword(attacker);

@@ -183,6 +183,22 @@ export function checkIntimidate(gen: Generation, source: Pokemon, target: Pokemo
   }
 }
 
+export function checkTerrify(gen: Generation, source: Pokemon, target: Pokemon) {
+  const blocked =
+    target.hasAbility('Clear Body', 'White Smoke', 'Full Metal Body') ||
+    // More abilities now block Intimidate in Gen 8 (DaWoblefet, Cloudy Mistral)
+    (gen.num === 8 && target.hasAbility('Inner Focus', 'Own Tempo', 'Oblivious', 'Scrappy'));
+  if (source.hasAbility('Terrify') && source.abilityOn && !blocked) {
+    if (target.hasAbility('Contrary', 'Competitive')) {
+      target.boosts.spa = Math.min(6, target.boosts.spa + 1);
+    } else if (target.hasAbility('Simple')) {
+      target.boosts.spa = Math.max(-6, target.boosts.spa - 2);
+    } else {
+      target.boosts.spa = Math.max(-6, target.boosts.spa - 1);
+    }
+  }
+}
+
 export function checkDownload(source: Pokemon, target: Pokemon) {
   if (source.hasAbility('Download')) {
     if (target.stats.spd <= target.stats.def) {

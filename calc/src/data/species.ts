@@ -206,7 +206,7 @@ const RBY: {[name: string]: SpeciesData} = {
     bs: {hp: 95, at: 95, df: 85, sp: 55, sl: 125},
     weightkg: 120,
   },
-  "Farfetch'd": {
+  'Farfetch\u2019d': {
     types: ['Normal', 'Flying'],
     bs: {hp: 52, at: 65, df: 55, sp: 60, sl: 58},
     weightkg: 15,
@@ -835,7 +835,7 @@ const GSC_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Electrode: {bs: {sa: 80, sd: 80}, gender: 'N'},
   Exeggcute: {bs: {sa: 60, sd: 45}},
   Exeggutor: {bs: {sa: 125, sd: 65}},
-  "Farfetch'd": {bs: {sa: 58, sd: 62}},
+  'Farfetch\u2019d': {bs: {sa: 58, sd: 62}},
   Fearow: {bs: {sa: 61, sd: 61}},
   Flareon: {bs: {sa: 95, sd: 110}},
   Gastly: {bs: {sa: 100, sd: 35}},
@@ -1521,7 +1521,7 @@ const ADV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Electrode: {abilities: {0: 'Soundproof'}},
   Exeggcute: {abilities: {0: 'Chlorophyll'}},
   Exeggutor: {abilities: {0: 'Chlorophyll'}},
-  "Farfetch'd": {abilities: {0: 'Keen Eye'}},
+  'Farfetch\u2019d': {abilities: {0: 'Keen Eye'}},
   Fearow: {abilities: {0: 'Keen Eye'}},
   Flareon: {abilities: {0: 'Flash Fire'}},
   Gastly: {abilities: {0: 'Levitate'}},
@@ -4901,19 +4901,6 @@ const BW_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 46,
     abilities: {0: 'Flame Body'},
   },
-  Volkraken: {
-    types: ['Water', 'Fire'],
-    bs: {hp: 100, at: 45, df: 80, sa: 135, sd: 100, sp: 95},
-    weightkg: 44.5,
-    abilities: {0: 'Analytic'},
-  },
-  Volkritter: {
-    types: ['Water', 'Fire'],
-    bs: {hp: 60, at: 30, df: 50, sa: 80, sd: 60, sp: 70},
-    weightkg: 15,
-    nfe: true,
-    abilities: {0: 'Anticipation'},
-  },
   Vullaby: {
     types: ['Dark', 'Flying'],
     bs: {hp: 70, at: 55, df: 75, sa: 45, sd: 65, sp: 60},
@@ -6116,6 +6103,19 @@ const XY_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     gender: 'N',
     abilities: {0: 'Water Absorb'},
   },
+  Volkraken: {
+    types: ['Water', 'Fire'],
+    bs: {hp: 100, at: 45, df: 80, sa: 135, sd: 100, sp: 95},
+    weightkg: 44.5,
+    abilities: {0: 'Analytic'},
+  },
+  Volkritter: {
+    types: ['Water', 'Fire'],
+    bs: {hp: 60, at: 30, df: 50, sa: 80, sd: 60, sp: 70},
+    weightkg: 15,
+    nfe: true,
+    abilities: {0: 'Anticipation'},
+  },
   Xerneas: {
     types: ['Fairy'],
     bs: {hp: 126, at: 131, df: 95, sa: 131, sd: 98, sp: 99},
@@ -6161,7 +6161,7 @@ const SM_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Eevee: {otherFormes: ['Eevee-Starter']},
   Electrode: {bs: {sp: 150}},
   Exeggutor: {bs: {sd: 75}, otherFormes: ['Exeggutor-Alola']},
-  "Farfetch'd": {bs: {at: 90}},
+  'Farfetch\u2019d': {bs: {at: 90}},
   Gengar: {abilities: {0: 'Cursed Body'}},
   Geodude: {otherFormes: ['Geodude-Alola']},
   Golem: {otherFormes: ['Golem-Alola']},
@@ -6636,7 +6636,7 @@ const SM_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Iron Fist'},
   },
   // Meltan does NOT benefit from Eviolite and should not have nfe: true (credit: Anubis)
-  // https://www.smogon.com/forums/threads/sword-shield-battle-mechanics-research.3655528/page-26#post-8295399
+  // https://smogon.com/forums/threads/sword-shield-battle-mechanics-research.3655528/post-8295399
   Meltan: {
     types: ['Steel'],
     bs: {hp: 46, at: 65, df: 65, sa: 55, sd: 35, sp: 34},
@@ -6794,9 +6794,9 @@ const SM_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 75, at: 70, df: 70, sa: 98, sd: 70, sp: 93},
     weightkg: 3.4,
     abilities: {0: 'Dancer'},
-    otherFormes: ["Oricorio-Pa'u", 'Oricorio-Pom-Pom', 'Oricorio-Sensu'],
+    otherFormes: ['Oricorio-Pa\'u', 'Oricorio-Pom-Pom', 'Oricorio-Sensu'],
   },
-  "Oricorio-Pa'u": {
+  'Oricorio-Pa\'u': {
     types: ['Psychic', 'Flying'],
     bs: {hp: 75, at: 70, df: 70, sa: 98, sd: 70, sp: 93},
     weightkg: 3.4,
@@ -7451,6 +7451,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   'Aegislash-Blade': {bs: {at: 140, sa: 140}},
   'Aegislash-Both': {bs: {at: 140, df: 140, sa: 140, sd: 140}},
   'Aegislash-Shield': {bs: {df: 140, sd: 140}},
+  Blastoise: {otherFormes: ['Blastoise-Gmax', 'Blastoise-Mega']},
   Butterfree: {otherFormes: ['Butterfree-Gmax']},
   Charizard: {otherFormes: ['Charizard-Gmax', 'Charizard-Mega-X', 'Charizard-Mega-Y']},
   Corsola: {otherFormes: ['Corsola-Galar']},
@@ -7459,7 +7460,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   Darumaka: {otherFormes: ['Darumaka-Galar']},
   Eevee: {otherFormes: ['Eevee-Gmax']},
-  "Farfetch'd": {otherFormes: ["Farfetch'd-Galar"]},
+  'Farfetch\u2019d': {otherFormes: ['Farfetch\u2019d-Galar']},
   Garbodor: {otherFormes: ['Garbodor-Gmax']},
   Gengar: {otherFormes: ['Gengar-Gmax', 'Gengar-Mega']},
   Kingler: {otherFormes: ['Kingler-Gmax']},
@@ -7479,13 +7480,16 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
       'Pikachu-Partner',
       'Pikachu-Sinnoh',
       'Pikachu-Unova',
+      'Pikachu-World',
     ],
   },
   Ponyta: {otherFormes: ['Ponyta-Galar']},
   Rapidash: {otherFormes: ['Rapidash-Galar']},
+  Slowbro: {otherFormes: ['Slowbro-Galar', 'Slowbro-Mega']},
   Slowpoke: {otherFormes: ['Slowpoke-Galar']},
   Snorlax: {otherFormes: ['Snorlax-Gmax']},
   Stunfisk: {otherFormes: ['Stunfisk-Galar']},
+  Venusaur: {otherFormes: ['Venusaur-Gmax', 'Venusaur-Mega']},
   Weezing: {otherFormes: ['Weezing-Galar']},
   Yamask: {otherFormes: ['Yamask-Galar']},
   Zigzagoon: {otherFormes: ['Zigzagoon-Galar']},
@@ -7545,11 +7549,24 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Swift Swim'},
     nfe: true,
   },
+  Astrolotl: {
+    types: ['Fire', 'Dragon'],
+    bs: {hp: 108, at: 108, df: 74, sa: 92, sd: 64, sp: 114},
+    weightkg: 50,
+    abilities: {0: 'Regenerator'},
+  },
   Barraskewda: {
     types: ['Water'],
     bs: {hp: 61, at: 123, df: 60, sa: 60, sd: 50, sp: 136},
     weightkg: 30,
     abilities: {0: 'Swift Swim'},
+  },
+  'Blastoise-Gmax': {
+    types: ['Water'],
+    bs: {hp: 79, at: 83, df: 100, sa: 85, sd: 105, sp: 78},
+    weightkg: 0,
+    abilities: {0: 'Torrent'},
+    baseSpecies: 'Blastoise',
   },
   Blipbug: {
     types: ['Bug'],
@@ -7611,6 +7628,14 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 80, at: 116, df: 75, sa: 65, sd: 75, sp: 119},
     weightkg: 33,
     abilities: {0: 'Blaze'},
+    otherFormes: ['Cinderace-Gmax'],
+  },
+  'Cinderace-Gmax': {
+    types: ['Fire'],
+    bs: {hp: 80, at: 116, df: 75, sa: 65, sd: 75, sp: 119},
+    weightkg: 0,
+    abilities: {0: 'Blaze'},
+    baseSpecies: 'Cinderace',
   },
   Clobbopus: {
     types: ['Fighting'],
@@ -7864,13 +7889,13 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Battle Armor'},
     gender: 'N',
   },
-  "Farfetch'd-Galar": {
+  'Farfetch\u2019d-Galar': {
     types: ['Fighting'],
     bs: {hp: 52, at: 95, df: 55, sa: 58, sd: 62, sp: 55},
     weightkg: 15,
     abilities: {0: 'Steadfast'},
     nfe: true,
-    baseSpecies: "Farfetch'd",
+    baseSpecies: 'Farfetch\u2019d',
   },
   Flapple: {
     types: ['Grass', 'Dragon'],
@@ -8000,6 +8025,14 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 70, at: 85, df: 65, sa: 125, sd: 65, sp: 120},
     weightkg: 45.2,
     abilities: {0: 'Torrent'},
+    otherFormes: ['Inteleon-Gmax'],
+  },
+  'Inteleon-Gmax': {
+    types: ['Water'],
+    bs: {hp: 70, at: 85, df: 65, sa: 125, sd: 65, sp: 120},
+    weightkg: 0,
+    abilities: {0: 'Torrent'},
+    baseSpecies: 'Inteleon',
   },
   'Kingler-Gmax': {
     types: ['Water'],
@@ -8007,6 +8040,13 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 0,
     abilities: {0: 'Hyper Cutter'},
     baseSpecies: 'Kingler',
+  },
+  'Kubfu': {
+    types: ['Fighting'],
+    bs: {hp: 60, at: 90, df: 60, sa: 53, sd: 50, sp: 72}, // FIXME should be 72
+    weightkg: 12,
+    nfe: true,
+    abilities: {0: 'Inner Focus'},
   },
   'Lapras-Gmax': {
     types: ['Water', 'Ice'],
@@ -8022,6 +8062,15 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Pickup'},
     nfe: true,
     baseSpecies: 'Linoone',
+  },
+  Magearna: {otherFormes: ['Magearna-Original']},
+  'Magearna-Original': {
+    baseSpecies: 'Magearna',
+    types: ['Steel', 'Fairy'],
+    bs: {hp: 80, at: 95, df: 115, sa: 130, sd: 115, sp: 65},
+    weightkg: 80.5,
+    gender: 'N',
+    abilities: {0: 'Soul-Heart'},
   },
   'Machamp-Gmax': {
     types: ['Fighting'],
@@ -8136,6 +8185,13 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Static'},
     baseSpecies: 'Pikachu',
   },
+  'Pikachu-World': {
+    types: ['Electric'],
+    bs: {hp: 35, at: 55, df: 40, sa: 50, sd: 50, sp: 90},
+    weightkg: 6,
+    abilities: {0: 'Static'},
+    baseSpecies: 'Pikachu',
+  },
   Pincurchin: {
     types: ['Electric'],
     bs: {hp: 48, at: 101, df: 95, sa: 91, sd: 85, sp: 15},
@@ -8185,6 +8241,14 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 100, at: 125, df: 90, sa: 60, sd: 70, sp: 85},
     weightkg: 90,
     abilities: {0: 'Overgrow'},
+    otherFormes: ['Rillaboom-Gmax'],
+  },
+  'Rillaboom-Gmax': {
+    types: ['Grass'],
+    bs: {hp: 100, at: 125, df: 90, sa: 60, sd: 70, sp: 85},
+    weightkg: 0,
+    abilities: {0: 'Overgrow'},
+    baseSpecies: 'Rillaboom',
   },
   Rolycoly: {
     types: ['Rock'],
@@ -8252,7 +8316,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     baseSpecies: 'Sinistea',
     gender: 'N',
   },
-  "Sirfetch'd": {
+  'Sirfetch\u2019d': {
     types: ['Fighting'],
     bs: {hp: 62, at: 135, df: 95, sa: 68, sd: 82, sp: 65},
     weightkg: 117,
@@ -8272,10 +8336,18 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Cheek Pouch'},
     nfe: true,
   },
+  'Slowbro-Galar': {
+    types: ['Psychic', 'Poison'],
+    bs: {hp: 95, at: 100, df: 95, sa: 100, sd: 70, sp: 30},
+    weightkg: 70.5,
+    abilities: {0: 'Quick Draw'},
+    baseSpecies: 'Slowbro',
+  },
   'Slowpoke-Galar': {
     types: ['Psychic'],
     bs: {hp: 90, at: 65, df: 65, sa: 40, sd: 40, sp: 15},
     weightkg: 36,
+    nfe: true,
     abilities: {0: 'Gluttony'},
     baseSpecies: 'Slowpoke',
   },
@@ -8361,6 +8433,41 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Punk Rock'},
     baseSpecies: 'Toxtricity',
   },
+  Urshifu: {
+    types: ['Fighting', 'Dark'],
+    bs: {hp: 100, at: 130, df: 100, sa: 63, sd: 60, sp: 97},
+    weightkg: 105,
+    abilities: {0: 'Unseen Fist'},
+    otherFormes: ['Urshifu-Gmax', 'Urshifu-Rapid-Strike', 'Urshifu-Rapid-Strike-Gmax'],
+  },
+  'Urshifu-Rapid-Strike': {
+    types: ['Fighting', 'Water'],
+    bs: {hp: 100, at: 130, df: 100, sa: 63, sd: 60, sp: 97},
+    weightkg: 105,
+    abilities: {0: 'Unseen Fist'},
+    baseSpecies: 'Urshifu',
+  },
+  'Urshifu-Rapid-Strike-Gmax': {
+    types: ['Fighting', 'Water'],
+    bs: {hp: 100, at: 130, df: 100, sa: 63, sd: 60, sp: 97},
+    weightkg: 105,
+    abilities: {0: 'Unseen Fist'},
+    baseSpecies: 'Urshifu',
+  },
+  'Urshifu-Gmax': {
+    types: ['Fighting', 'Dark'],
+    bs: {hp: 100, at: 130, df: 100, sa: 63, sd: 60, sp: 97},
+    weightkg: 0,
+    abilities: {0: 'Unseen Fist'},
+    baseSpecies: 'Urshifu',
+  },
+  'Venusaur-Gmax': {
+    types: ['Grass', 'Poison'],
+    bs: {hp: 80, at: 82, df: 83, sa: 100, sd: 100, sp: 80},
+    weightkg: 0,
+    abilities: {0: 'Overgrow'},
+    baseSpecies: 'Venusaur',
+  },
   'Weezing-Galar': {
     types: ['Poison', 'Fairy'],
     bs: {hp: 65, at: 90, df: 120, sa: 85, sd: 70, sp: 60},
@@ -8420,6 +8527,22 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 785,
     abilities: {0: 'Dauntless Shield'},
     baseSpecies: 'Zamazenta',
+    gender: 'N',
+  },
+  Zarude: {
+    types: ['Dark', 'Grass'],
+    bs: {hp: 105, at: 120, df: 105, sa: 70, sd: 95, sp: 105},
+    weightkg: 70,
+    abilities: {0: 'Leaf Guard'},
+    gender: 'N',
+    otherFormes: ['Zarude-Dada'],
+  },
+  'Zarude-Dada': {
+    types: ['Dark', 'Grass'],
+    bs: {hp: 105, at: 120, df: 105, sa: 70, sd: 95, sp: 105},
+    weightkg: 70,
+    abilities: {0: 'Leaf Guard'},
+    baseSpecies: 'Zarude',
     gender: 'N',
   },
   'Zigzagoon-Galar': {

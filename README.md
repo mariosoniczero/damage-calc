@@ -126,7 +126,8 @@ use an alternative data layer such as [`@pkmn/data`][9]. You must load your data
 ## UI
 
 The [UI layer][2] is currently is written in vanilla JavaScript and HTML. To view the UI locally you
-first must install dependencies by running `npm install` at the top level and without `calc/`. This should create a `node_modules/` folder under both the root directory and under `calc/`:
+first must install dependencies by running `npm install` at the top level and without `calc/`. This
+should create a `node_modules/` folder under both the root directory and under `calc/`:
 
 ```sh
 $ npm install
@@ -169,10 +170,10 @@ how to programmatically update sets.
 
 This project was originally created by Honko and is primarly maintained by Austin and pre.
 
-- Gens 1-5 was originally implemented by Honko.
-- The Gen 6 update was by gamut-was-taken and Austin.
+- Gens 1-6 were originally implemented by Honko.
+- The Omega Ruby / Alpha Sapphire update was done by gamut-was-taken and Austin.
 - The Gen 7 update was done by Austin.
-- The Gen 8 update was done by Austin and Kris.
+- The Gen 8 update was done by Austin.
 - Some CSS styling was contributed by Zarel to match the Pokémon Showdown! theme.
 - The calculator was rewritten in TypeScript, modularized and corrected by pre.
 

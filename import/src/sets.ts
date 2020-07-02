@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 
-import * as ps from '@pokemon-showdown/sets';
+import * as ps from '@smogon/sets';
 import * as calc from 'calc';
 import * as tiers from './tiers.json';
 import * as randLevels from './random-levels.json';
@@ -56,8 +56,6 @@ type RandomPokemonOptions = Exclude<PokemonSet, 'ability' | 'item'> & {
   items?: string[];
 };
 
-type Format = keyof typeof FORMATS;
-
 const FORMATS: {[format: string]: string} = {
   OU: 'ou',
   UU: 'uu',
@@ -77,6 +75,8 @@ const FORMATS: {[format: string]: string} = {
   CAP: 'cap',
   '1v1': '1v1',
 };
+
+type Format = keyof typeof FORMATS;
 
 const TO_FORMAT: {[tier in Tier]?: Format} = {
   Uber: 'Ubers',
@@ -98,7 +98,7 @@ const USAGE = ['OU', 'UU', 'RU', 'NU', 'PU', 'ZU', 'Uber', 'LC', 'Doubles'];
 
 export async function importSets(dir: string, randomDir?: string) {
   for (let g = 1; g <= 8; g++) {
-    const gen = g as ps.Generation;
+    const gen = g as ps.GenerationNum;
     const setsByPokemon: PokemonSets = {};
     const randomOptionsByPokemon: {[pokemon: string]: RandomPokemonOptions} = {};
     let stats: UsageStatistics | null = null;
@@ -145,7 +145,7 @@ export async function importSets(dir: string, randomDir?: string) {
 
     const comment = (from: string) => `/* AUTOMATICALLY GENERATED FROM ${from}, DO NOT EDIT! */`;
     fs.writeFileSync(path.resolve(dir, `sets/gen${gen}.js`),
-      `${comment('@pokemon-showdown/sets')}\n` +
+      `${comment('@smogon/sets')}\n` +
       `var SETDEX_${GENS[gen - 1]} = ${JSON.stringify(setsByPokemon)};\n`);
     fs.writeFileSync(path.resolve(dir, `randoms/gen${gen}.js`),
       `${comment('POKEMON SHOWDOWN')}\n` +
@@ -155,14 +155,14 @@ export async function importSets(dir: string, randomDir?: string) {
 
 async function importSetsForPokemon(
   pokemon: string,
-  gen: ps.Generation,
+  gen: ps.GenerationNum,
   setsByPokemon: PokemonSets
 ) {
   for (const format in FORMATS) {
     const data = await ps.forFormat(`gen${gen}${FORMATS[format]}`);
     if (!data || (gen < 7 && RECENT_ONLY.includes(format as Format))) continue;
     const forme = toForme(pokemon);
-    const smogon = data['smogon.com/dex'];
+    const smogon = data['dex'];
     if (smogon?.[forme]) {
       setsByPokemon[pokemon] = setsByPokemon[pokemon] || {};
       for (const name in smogon[forme]) {
@@ -178,7 +178,7 @@ async function importSetsForPokemon(
 
       if (!eligible) continue;
 
-      const usage = data['smogon.com/stats'];
+      const usage = data['stats'];
       if (usage?.[forme]) {
         setsByPokemon[pokemon] = setsByPokemon[pokemon] || {};
         for (const name in usage[forme]) {
@@ -193,10 +193,11 @@ async function importSetsForPokemon(
 
 function importRandomOptionsForPokemon(
   pokemon: string,
-  gen: ps.Generation,
+  gen: ps.GenerationNum,
   usage: UsageStatistics
 ): RandomPokemonOptions | undefined {
   if (toID(pokemon) === 'aegislash') pokemon = 'Aegislash-Shield';
+  if (gen === 8 && toID(pokemon) === 'keldeo') pokemon = 'Keldeo-Resolute';
   let moves = RANDOM_MOVES[gen][toID(pokemon)];
   if (!moves) return undefined;
   const stats = usage.data[toForme(pokemon)];
@@ -233,7 +234,6 @@ function importRandomOptionsForPokemon(
   const generation = calc.Generations.get(gen);
 
   let level = r.custom[pokemon] || r.level[tier] || r.default;
-  if (gen === 8 && tier === 'Illegal' && TO_TIER[7][toID(f)]) level = 72;
   if (gen === 6 && level === r.default && !generation.species.get(toID(pokemon))?.nfe) {
     level = 80;
   }
@@ -271,6 +271,9 @@ const FORMES: {[name: string]: string} = {
   'Aegislash-Shield': 'Aegislash',
   'Wishiwashi-School': 'Wishiwashi',
   'Minior-Meteor': 'Minior',
+  'Darmanitan-Galar-Zen': 'Darmanitan-Galar',
+  'Sirfetch’d': 'Sirfetch\'d',
+  'Keldeo-Resolute': 'Keldeo',
 };
 
 // TODO handle Gmax
@@ -292,10 +295,10 @@ function toCalc(set: ps.DeepPartial<ps.PokemonSet>): PokemonSet {
   };
 }
 
-function toStatsTable(stats: ps.DeepPartial<ps.StatsTable<number>>): StatsTable {
+function toStatsTable(stats: ps.DeepPartial<ps.StatsTable>): StatsTable {
   const s: Partial<StatsTable> = {};
 
-  let stat: keyof ps.StatsTable<number>;
+  let stat: keyof ps.StatsTable;
   for (stat in stats) {
     const val = stats[stat];
     s[shortForm(stat)] = val;
@@ -304,7 +307,7 @@ function toStatsTable(stats: ps.DeepPartial<ps.StatsTable<number>>): StatsTable 
   return s;
 }
 
-function shortForm(stat: keyof ps.StatsTable<number>) {
+function shortForm(stat: keyof ps.StatsTable) {
   switch (stat) {
   case 'hp':
     return 'hp';

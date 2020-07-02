@@ -24,7 +24,7 @@ export class Move implements State.Move {
   category: I.MoveCategory;
   flags: I.MoveFlags;
   secondaries: any;
-  target: I.MoveTarget;;
+  target: I.MoveTarget;
   recoil?: [number, number];
   hasCrashDamage: boolean;
   mindBlownRecoil: boolean;
@@ -61,12 +61,20 @@ export class Move implements State.Move {
         !!(data.category === 'Status')
       );
       const maxMove = gen.moves.get(toID(maxMoveName));
-      data = extend(true, {}, maxMove, {
-        name: maxMoveName,
+      const maxPower = () => {
+        if (['G-Max Drum Solo', 'G-Max Fire Ball', 'G-Max Hydrosnipe'].includes(maxMoveName)) {
+          return 160;
+        }
         // TODO: checking basePower === 10 is fragile (what if the maxMove's basePower is
         // overridden?) and also fails for Max Flare, which is strangely 100 BP in the game data
-        basePower: maxMove!.basePower === 10 || maxMoveName === 'Max Flare'
-          ? data.maxMove.basePower : maxMove!.basePower,
+        if (maxMove!.basePower === 10 || maxMoveName === 'Max Flare') {
+          return data.maxMove!.basePower;
+        }
+        return maxMove!.basePower;
+      };
+      data = extend(true, {}, maxMove, {
+        name: maxMoveName,
+        basePower: maxPower(),
         category: data.category,
       });
     }
@@ -99,9 +107,11 @@ export class Move implements State.Move {
     this.useZ = options.useZ;
     this.useMax = options.useMax;
     this.overrides = options.overrides;
+    this.species = options.species;
 
     this.bp = data.basePower;
-    // These moves have a type type of these moves exists, but the damage they deal is typeless so we override it
+    // These moves have a type type of these moves exists, but the damage they deal is typeless so
+    // we override it
     const typelessDamage = gen.num >= 2 && gen.num <= 4 &&
       ['futuresight', 'doomdesire', 'struggle'].includes(data.id);
     this.type = typelessDamage ? '???' : data.type;
@@ -114,9 +124,8 @@ export class Move implements State.Move {
     }
     this.timesUsed = (this.dropsStats && options.timesUsed) || 1;
     this.secondaries = data.secondaries;
-    // For the purposes of the damage formula only 'allAdjacent', 'allAdjacentFoes', and
-    // 'adjacentFoe' matter, so we simply default to 'any' for the others even though they may not
-    // actually be 'any'-target moves
+    // For the purposes of the damage formula only 'allAdjacent' and 'allAdjacentFoes' matter, so we
+    // simply default to 'any' for the others even though they may not actually be 'any'-target
     this.target = data.target || 'any';
     this.recoil = data.recoil;
     this.hasCrashDamage = !!data.hasCrashDamage;
@@ -174,7 +183,7 @@ export class Move implements State.Move {
 
 export function getZMoveName(moveName: string, moveType: I.TypeName, item?: string) {
   item = item || '';
-  if (moveName.indexOf('Hidden Power') !== -1) return 'Breakneck Blitz';
+  if (moveName.includes('Hidden Power')) return 'Breakneck Blitz';
   if (moveName === 'Clanging Scales' && item === 'Kommonium Z') return 'Clangorous Soulblaze';
   if (moveName === 'Darkest Lariat' && item === 'Incinium Z') return 'Malicious Moonsault';
   if (moveName === 'Giga Impact' && item === 'Snorlium Z') return 'Pulverizing Pancake';
@@ -182,7 +191,7 @@ export function getZMoveName(moveName: string, moveType: I.TypeName, item?: stri
   if (moveName === 'Photon Geyser' && item === 'Ultranecrozium Z') {
     return 'Light That Burns the Sky';
   }
-  if (moveName === 'Play Rough' && item === 'Mimikium Z') return "Let's Snuggle Forever";
+  if (moveName === 'Play Rough' && item === 'Mimikium Z') return 'Let\'s Snuggle Forever';
   if (moveName === 'Psychic' && item === 'Mewnium Z') return 'Genesis Supernova';
   if (moveName === 'Sparkling Aria' && item === 'Primarium Z') return 'Oceanic Operetta';
   if (moveName === 'Spectral Thief' && item === 'Marshadium Z') {
@@ -192,7 +201,7 @@ export function getZMoveName(moveName: string, moveType: I.TypeName, item?: stri
   if (moveName === 'Stone Edge' && item === 'Lycanium Z') return 'Splintered Stormshards';
   if (moveName === 'Sunsteel Strike' && item === 'Solganium Z') return 'Searing Sunraze Smash';
   if (moveName === 'Volt Tackle' && item === 'Pikanium Z') return 'Catastropika';
-  if (moveName === "Nature's Madness" && item === 'Tapunium Z') return 'Guardian of Alola';
+  if (moveName === 'Nature\'s Madness' && item === 'Tapunium Z') return 'Guardian of Alola';
   if (moveName === 'Thunderbolt') {
     if (item === 'Aloraichium Z') return 'Stoked Sparksurfer';
     if (item === 'Pikashunium Z') return '10,000,000 Volt Thunderbolt';
@@ -228,6 +237,7 @@ export function getMaxMoveName(moveType: I.TypeName, pokemonSpecies?: string, is
   if (moveType === 'Fire') {
     if (pokemonSpecies === 'Charizard-Gmax') return 'G-Max Wildfire';
     if (pokemonSpecies === 'Centiskorch-Gmax') return 'G-Max Centiferno';
+    if (pokemonSpecies === 'Cinderace-Gmax') return 'G-Max Fire Ball';
   }
   if (moveType === 'Normal') {
     if (pokemonSpecies === 'Eevee-Gmax') return 'G-Max Cuddle';
@@ -244,15 +254,25 @@ export function getMaxMoveName(moveType: I.TypeName, pokemonSpecies?: string, is
   }
   if (moveType === 'Electric') {
     if (pokemonSpecies === 'Pikachu-Gmax') return 'G-Max Volt Crash';
-    if (pokemonSpecies === 'Toxtricity-Gmax') return 'G-Max Stun Shock';
+    if (pokemonSpecies?.startsWith('Toxtricity') &&
+      pokemonSpecies?.endsWith('Gmax')) return 'G-Max Stun Shock';
   }
   if (moveType === 'Grass') {
     if (pokemonSpecies === 'Appletun-Gmax') return 'G-Max Sweetness';
     if (pokemonSpecies === 'Flapple-Gmax') return 'G-Max Tartness';
+    if (pokemonSpecies === 'Rillaboom-Gmax') return 'G-Max Drum Solo';
+    if (pokemonSpecies === 'Venusaur-Gmax') return 'G-Max Vine Lash';
   }
   if (moveType === 'Water') {
+    if (pokemonSpecies === 'Blastoise-Gmax') return 'G-Max Cannonade';
     if (pokemonSpecies === 'Drednaw-Gmax') return 'G-Max Stonesurge';
+    if (pokemonSpecies === 'Inteleon-Gmax') return 'G-Max Hydrosnipe';
     if (pokemonSpecies === 'Kingler-Gmax') return 'G-Max Foam Burst';
+    if (pokemonSpecies === 'Urshifu-Rapid-Strike-Gmax') return 'G-Max Rapid Flow';
+  }
+  if (moveType === 'Dark') {
+    if (pokemonSpecies === 'Grimmsnarl-Gmax') return 'G-Max Snooze';
+    if (pokemonSpecies === 'Urshifu-Gmax') return 'G-Max One Blow';
   }
   if (moveType === 'Poison' && pokemonSpecies === 'Garbodor-Gmax') return 'G-Max Malodor';
   if (moveType === 'Fighting' && pokemonSpecies === 'Machamp-Gmax') return 'G-Max Chi Strike';

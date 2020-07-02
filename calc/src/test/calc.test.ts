@@ -1,5 +1,7 @@
+/* eslint-disable max-len */
+
 import {AbilityName, Weather} from '../data/interface';
-import {inGen, inGens} from './helper';
+import {inGen, inGens, tests} from './helper';
 
 describe('calc', () => {
   describe('Multi-Gen', () => {
@@ -40,25 +42,11 @@ describe('calc', () => {
       });
     });
 
-    inGens(1, 8, ({gen, calculate, Pokemon, Move}) => {
-      test(`Mulihit (gen ${gen})`, () => {
-        const result = calculate(Pokemon('Snorlax'), Pokemon('Vulpix'), Move('Comet Punch'));
-        if (gen < 3) {
-          expect(result.range()).toEqual([36, 43]);
-          expect(result.desc()).toBe(
-            'Snorlax Comet Punch (3 hits) vs. Vulpix: 108-129 (38.7 - 46.2%) -- approx. 3HKO'
-          );
-        } else if (gen === 3) {
-          expect(result.range()).toEqual([44, 52]);
-          expect(result.desc()).toBe(
-            '0 Atk Snorlax Comet Punch (3 hits) vs. 0 HP / 0 Def Vulpix: 132-156 (60.8 - 71.8%) -- approx. 2HKO'
-          );
-        } else {
-          expect(result.range()).toEqual([43, 52]);
-          expect(result.desc()).toBe(
-            '0 Atk Snorlax Comet Punch (3 hits) vs. 0 HP / 0 Def Vulpix: 129-156 (59.4 - 71.8%) -- approx. 2HKO'
-          );
-        }
+    tests('Comet Punch', ({gen, calculate, Pokemon, Move}) => {
+      expect(calculate(Pokemon('Snorlax'), Pokemon('Vulpix'), Move('Comet Punch'))).toMatch(gen, {
+        1: {range: [36, 43], desc: 'Snorlax Comet Punch (3 hits) vs. Vulpix', result: '(38.7 - 46.2%) -- approx. 3HKO'},
+        3: {range: [44, 52], desc: '0 Atk Snorlax Comet Punch (3 hits) vs. 0 HP / 0 Def Vulpix', result: '(60.8 - 71.8%) -- approx. 2HKO'},
+        4: {range: [43, 52], result: '(59.4 - 71.8%) -- approx. 2HKO'},
       });
     });
 
@@ -658,7 +646,7 @@ describe('calc', () => {
         const result = calculate(abomasnow, hoopa, Move('Blizzard'), field);
         expect(result.range()).toEqual([50, 59]);
         expect(result.desc()).toBe(
-          "0 SpA Abomasnow Helping Hand Blizzard vs. 32 HP / 0 SpD Hoopa-Unbound through Light Screen with an ally's Friend Guard: 50-59 (16.1 - 19%)" +
+          '0 SpA Abomasnow Helping Hand Blizzard vs. 32 HP / 0 SpD Hoopa-Unbound through Light Screen with an ally\'s Friend Guard: 50-59 (16.1 - 19%)' +
             ' -- 91.4% chance to 3HKO after Stealth Rock, 1 layer of Spikes, hail damage, Leech Seed damage, and Grassy Terrain recovery'
         );
       });
@@ -764,6 +752,16 @@ describe('calc', () => {
         );
       });
 
+      test('Knock Off vs. Silvally', () => {
+        const sawk = Pokemon('Sawk', {ability: 'Mold Breaker', evs: {atk: 252}});
+        const silvally = Pokemon('Silvally-Dark', {item: 'Dark Memory'});
+        const knockoff = Move('Knock Off');
+        const result = calculate(sawk, silvally, knockoff);
+        expect(result.desc()).toBe(
+          '252 Atk Mold Breaker Sawk Knock Off vs. 0 HP / 0 Def Silvally-Dark: 36-43 (10.8 - 12.9%) -- possible 8HKO'
+        );
+      });
+
       test('% chance to OHKO', () => {
         const abomasnow = Pokemon('Abomasnow', {
           level: 55,
@@ -773,15 +771,23 @@ describe('calc', () => {
         const deerling = Pokemon('Deerling', {evs: {hp: 36}});
         const blizzard = Move('Blizzard');
         const hail = Field({weather: 'Hail'});
-        let result = calculate(abomasnow, deerling, blizzard, hail);
-        expect(result.desc()).toBe(
-          'Lvl 55 252 SpA Choice Specs Abomasnow Blizzard vs. 36 HP / 0 SpD Deerling: 236-278 (87.4 - 102.9%) -- 56.3% chance to OHKO after hail damage'
-        );
-        // When Abomasnow is faster than Deerling it should instead no longer consider end-of-turn damage
-        abomasnow.boosts.spe = 6;
-        result = calculate(abomasnow, deerling, blizzard, hail);
+        const result = calculate(abomasnow, deerling, blizzard, hail);
         expect(result.desc()).toBe(
           'Lvl 55 252 SpA Choice Specs Abomasnow Blizzard vs. 36 HP / 0 SpD Deerling: 236-278 (87.4 - 102.9%) -- 25% chance to OHKO'
+        );
+      });
+
+      test('% chance to OHKO with Leftovers', () => {
+        const kyurem = Pokemon('Kyurem', {
+          level: 100,
+          item: 'Choice Specs',
+          evs: {spa: 252},
+        });
+        const jirachi = Pokemon('Jirachi', {item: 'Leftovers'});
+        const earthpower = Move('Earth Power');
+        const result = calculate(kyurem, jirachi, earthpower);
+        expect(result.desc()).toBe(
+          '252 SpA Choice Specs Kyurem Earth Power vs. 0 HP / 0 SpD Jirachi: 294-348 (86.2 - 102%) -- 12.5% chance to OHKO'
         );
       });
     });

@@ -365,6 +365,16 @@ $(".move-selector").change(function () {
 					pokeObj.find("." + legacyStat + " .ivs").val(hpIVs[stat] !== undefined ? hpIVs[stat] : 31);
 					pokeObj.find("." + legacyStat + " .dvs").val(hpIVs[stat] !== undefined ? calc.Stats.IVToDV(hpIVs[stat]) : 15);
 				}
+				if (gen < 3) {
+					var hpDV = calc.Stats.getHPDV({
+						atk: pokemon.ivs.atk,
+						def: pokemon.ivs.def,
+						spe: pokemon.ivs.spe,
+						spc: pokemon.ivs.spa
+					});
+					pokeObj.find(".hp .ivs").val(calc.Stats.DVToIV(hpDV));
+					pokeObj.find(".hp .dvs").val(hpDV);
+				}
 				pokeObj.change();
 				moveGroupObj.children(".move-bp").val(gen >= 6 ? 60 : 70);
 			}
@@ -764,10 +774,10 @@ function createPokemon(pokeInfo) {
 			status: CALC_STATUS[pokeInfo.find(".status").val()],
 			toxicCounter: status === 'Badly Poisoned' ? ~~pokeInfo.find(".toxic-counter").val() : 0,
 			moves: [
-				getMoveDetails(pokeInfo.find(".move1"), ability, item, isDynamaxed),
-				getMoveDetails(pokeInfo.find(".move2"), ability, item, isDynamaxed),
-				getMoveDetails(pokeInfo.find(".move3"), ability, item, isDynamaxed),
-				getMoveDetails(pokeInfo.find(".move4"), ability, item, isDynamaxed)
+				getMoveDetails(pokeInfo.find(".move1"), name, ability, item, isDynamaxed),
+				getMoveDetails(pokeInfo.find(".move2"), name, ability, item, isDynamaxed),
+				getMoveDetails(pokeInfo.find(".move3"), name, ability, item, isDynamaxed),
+				getMoveDetails(pokeInfo.find(".move4"), name, ability, item, isDynamaxed)
 			],
 			overrides: {
 				baseStats: baseStats,
@@ -783,7 +793,7 @@ function getGender(gender) {
 	return 'F';
 }
 
-function getMoveDetails(moveInfo, ability, item, useMax) {
+function getMoveDetails(moveInfo, species, ability, item, useMax) {
 	var moveName = moveInfo.find("select.move-selector").val();
 	var isZMove = gen > 6 && moveInfo.find("input.move-z").prop("checked");
 	var isCrit = moveInfo.find(".move-crit").prop("checked");
@@ -796,7 +806,7 @@ function getMoveDetails(moveInfo, ability, item, useMax) {
 	};
 	if (gen >= 4) overrides.category = moveInfo.find(".move-cat").val();
 	return new calc.Move(gen, moveName, {
-		ability: ability, item: item, useZ: isZMove, isCrit: isCrit, hits: hits,
+		ability: ability, item: item, useZ: isZMove, species: species, isCrit: isCrit, hits: hits,
 		timesUsed: timesUsed, timesUsedWithMetronome: timesUsedWithMetronome, overrides: overrides, useMax: useMax
 	});
 }
@@ -815,6 +825,10 @@ function createField() {
 		spikes = [~~$("input:radio[name='spikesL']:checked").val(), ~~$("input:radio[name='spikesR']:checked").val()];
 	}
 	var steelsurge = [$("#steelsurgeL").prop("checked"), $("#steelsurgeR").prop("checked")];
+	var vinelash = [$("#vinelashL").prop("checked"), $("#vinelashR").prop("checked")];
+	var wildfire = [$("#wildfireL").prop("checked"), $("#wildfireR").prop("checked")];
+	var cannonade = [$("#cannonadeL").prop("checked"), $("#cannonadeR").prop("checked")];
+	var volcalith = [$("#volcalithL").prop("checked"), $("#volcalithR").prop("checked")];
 	var terrain = ($("input:checkbox[name='terrain']:checked").val()) ? $("input:checkbox[name='terrain']:checked").val() : "";
 	var isReflect = [$("#reflectL").prop("checked"), $("#reflectR").prop("checked")];
 	var isLightScreen = [$("#lightScreenL").prop("checked"), $("#lightScreenR").prop("checked")];
@@ -831,7 +845,9 @@ function createField() {
 
 	var createSide = function (i) {
 		return new calc.Side({
-			spikes: spikes[i], isSR: isSR[i], steelsurge: steelsurge[i], isReflect: isReflect[i], isLightScreen: isLightScreen[i],
+			spikes: spikes[i], isSR: isSR[i], steelsurge: steelsurge[i],
+			vinelash: vinelash[i], wildfire: wildfire[i], cannonade: cannonade[i], volcalith: volcalith[i],
+			isReflect: isReflect[i], isLightScreen: isLightScreen[i],
 			isProtected: isProtected[i], isSeeded: isSeeded[i], isForesight: isForesight[i],
 			isTailwind: isTailwind[i], isHelpingHand: isHelpingHand[i], isFriendGuard: isFriendGuard[i],
 			isAuroraVeil: isAuroraVeil[i], isBattery: isBattery[i], isSwitching: isSwitchingOut[i] ? 'out' : undefined
@@ -877,7 +893,7 @@ function calcStat(poke, statName) {
 	}
 	// Shedinja still has 1 max HP during the effect even if its Dynamax Level is maxed (DaWoblefet)
 	var total = calc.calcStat(gen, legacyStatToStat(statName), base, ivs, evs, level, nature);
-	if (statName === "hp" && poke.isDynamaxed && total !== 1) {
+	if (gen > 7 && statName === "hp" && poke.isDynamaxed && total !== 1) {
 		total *= 2;
 	}
 	stat.find(".total").text(total);
@@ -993,6 +1009,14 @@ function clearField() {
 	$("#gscSpikesR").prop("checked", false);
 	$("#steelsurgeL").prop("checked", false);
 	$("#steelsurgeR").prop("checked", false);
+	$("#vinelashL").prop("checked", false);
+	$("#vinelashR").prop("checked", false);
+	$("#wildfireL").prop("checked", false);
+	$("#wildfireR").prop("checked", false);
+	$("#cannonadeL").prop("checked", false);
+	$("#cannonadeR").prop("checked", false);
+	$("#volcalithL").prop("checked", false);
+	$("#volcalithR").prop("checked", false);
 	$("#reflectL").prop("checked", false);
 	$("#reflectR").prop("checked", false);
 	$("#lightScreenL").prop("checked", false);

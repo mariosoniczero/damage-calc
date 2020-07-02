@@ -9,6 +9,7 @@ const pkmn = {Generations: new Generations(Dex)};
 
 const gens = [1, 2, 3, 4, 5, 6, 7, 8] as I.GenerationNum[];
 
+// TODO: reverse expectations everywhere - p should expected and c should be received!
 describe('Generations', () => {
   it('abilities', () => {
     for (const gen of gens) {
@@ -60,7 +61,6 @@ describe('Generations', () => {
       const p = Array.from(pkmn.Generations.get(gen).species);
       const c = new Map<I.ID, I.Specie>();
       for (const specie of calc.Generations.get(gen).species) c.set(specie.id, specie);
-
       expect(p).toHaveLength(c.size);
       for (const specie of p) {
         expect(specie).toEqual(c.get(specie.id));

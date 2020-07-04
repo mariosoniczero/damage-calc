@@ -179,6 +179,8 @@ export function calculateSMSS(
   let isGalvanize = false;
   let isLiquidVoice = false;
   let isNormalize = false;
+  let isConflagrate = false;
+  let isInfectate = false;
   const noTypeChange = move.named(
     'Revelation Dance',
     'Judgment',
@@ -202,10 +204,14 @@ export function calculateSMSS(
       move.type = 'Fairy';
     } else if ((isRefrigerate = attacker.hasAbility('Refrigerate') && normal)) {
       move.type = 'Ice';
+    } else if ((isConflagrate = attacker.hasAbility('Conflagrate') && normal)) {
+      move.type = 'Fire';
+    } else if ((isInfectate = attacker.hasAbility('Infectate') && normal)) {
+      move.type = 'Bug';
     } else if ((isNormalize = attacker.hasAbility('Normalize'))) { // Boosts any type
       move.type = 'Normal';
     }
-    if (isGalvanize || isLiquidVoice || isPixilate || isRefrigerate || isAerilate || isNormalize) {
+    if (isGalvanize || isLiquidVoice || isPixilate || isRefrigerate || isAerilate || isNormalize || isConflagrate || isInfectate) {
       desc.attackerAbility = attacker.ability;
     }
   }

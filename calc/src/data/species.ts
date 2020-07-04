@@ -8553,6 +8553,302 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     nfe: true,
     baseSpecies: 'Zigzagoon',
   },
+  'Arbok': { formes: ['Arbok', 'Arbok-Mega'] },
+  'Avalugg': { formes: ['Avalugg', 'Avalugg-Mega'] },
+  'Bellossom': { formes: ['Bellossom', 'Bellossom-Mega'] },
+  'Bronzong': { formes: ['Bronzong', 'Bronzong-Mega'] },
+  'Butterfree': { formes: ['Butterfree', 'Butterfree-Mega'] },
+  'Delcatty': { formes: ['Delcatty', 'Delcatty-Mega'] },
+  'Druddigon': { formes: ['Druddigon', 'Druddigon-Mega'] },
+  'Empoleon': { formes: ['Empoleon', 'Empoleon-Mega'] },
+  'Feraligatr': { formes: ['Feraligatr', 'Feraligatr-Mega'] },
+  'Flygon': { formes: ['Flygon', 'Flygon-Mega-X', 'Flygon-Mega-Y'] },
+  'Froslass': { formes: ['Froslass', 'Froslass-Mega'] },
+  'Golurk': { formes: ['Golurk', 'Golurk-Mega'] },
+  'Granbull': { formes: ['Granbull', 'Granbull-Mega'] },
+  'Infernape': { formes: ['Infernape', 'Infernape-Mega'] },
+  'Kecleon': { formes: ['Kecleon', 'Kecleon-Mega'] },
+  'Krookodile': { formes: ['Krookodile', 'Krookodile-Mega'] },
+  'Lanturn': { formes: ['Lanturn', 'Lanturn-Mega'] },
+  'Luxray': { formes: ['Luxray', 'Luxray-Mega'] },
+  'Meganium': { formes: ['Meganium', 'Meganium-Mega'] },
+  'Miltank': { formes: ['Miltank', 'Miltank-Mega'] },
+  'Rapidash': { formes: ['Rapidash', 'Rapidash-Galar', 'Rapidash-Mega'] },
+  'Roserade': { formes: ['Roserade', 'Roserade-Mega'] },
+  'Staraptor': { formes: ['Staraptor', 'Staraptor-Mega'] },
+  'Torterra': { formes: ['Torterra', 'Torterra-Mega'] },
+  'Typhlosion': { formes: ['Typhlosion', 'Typhlosion-Mega'] },
+  'Weezing': { formes: ['Weezing', 'Weezing-Galar', 'Weezing-Mega'] },
+  'Arbok-Mega': {
+    t1: 'Poison',
+    t2: 'Dark',
+    bs: { hp: 60, at: 135, df: 94, sa: 55, sd: 94, sp: 110 },
+    w: 65,
+    ab: 'Corrosion',
+    isAlternateForme: true
+  },
+  'Avalugg-Mega': {
+    t1: 'Ice',
+    t2: 'Ground',
+    bs: { hp: 95, at: 122, df: 229, sa: 64, sd: 66, sp: 38 },
+    w: 505,
+    ab: 'Refrigerate',
+    isAlternateForme: true
+  },
+  'Bellossom-Mega': {
+    t1: 'Grass',
+    t2: 'Fire',
+    bs: { hp: 75, at: 120, df: 100, sa: 110, sd: 105, sp: 80 },
+    w: 5.8,
+    ab: 'Conflagrate',
+    isAlternateForme: true
+  },
+  'Bronzong-Mega': {
+    t1: 'Steel',
+    t2: 'Psychic',
+    bs: { hp: 67, at: 119, df: 146, sa: 89, sd: 146, sp: 33 },
+    w: 187,
+    ab: 'Persistent',
+    isAlternateForme: true
+  },
+  'Butterfree-Mega': {
+    t1: 'Bug',
+    t2: 'Psychic',
+    bs: { hp: 60, at: 20, df: 80, sa: 150, sd: 40, sp: 145 },
+    w: 32,
+    ab: 'Tinted Lens',
+    isAlternateForme: true
+  },
+  'Delcatty-Mega': {
+    t1: 'Normal',
+    t2: 'Ghost',
+    bs: { hp: 70, at: 10, df: 115, sa: 125, sd: 115, sp: 65 },
+    w: 32.6,
+    ab: 'Terrify',
+    isAlternateForme: true
+  },
+  'Druddigon-Mega': {
+    t1: 'Dragon',
+    t2: 'Steel',
+    bs: { hp: 77, at: 160, df: 125, sa: 50, sd: 125, sp: 48 },
+    w: 139,
+    ab: 'Defiant',
+    isAlternateForme: true
+  },
+  'Empoleon-Mega': {
+    t1: 'Water',
+    t2: 'Steel',
+    bs: { hp: 84, at: 96, df: 118, sa: 131, sd: 131, sp: 70 },
+    w: 84.5,
+    ab: 'Thick Fat',
+    isAlternateForme: true
+  },
+  'Feraligatr-Mega': {
+    t1: 'Water',
+    t2: 'Ice',
+    bs: { hp: 85, at: 145, df: 110, sa: 99, sd: 98, sp: 93 },
+    w: 88.8,
+    ab: 'Sheer Force',
+    isAlternateForme: true
+  },
+  'Flygon-Mega-X': {
+    t1: 'Ground',
+    t2: 'Dragon',
+    bs: { hp: 80, at: 135, df: 105, sa: 100, sd: 95, sp: 105 },
+    w: 82,
+    ab: 'Levitate',
+    isAlternateForme: true
+  },
+  'Flygon-Mega-Y': {
+    t1: 'Bug',
+    t2: 'Dragon',
+    bs: { hp: 80, at: 100, df: 95, sa: 135, sd: 105, sp: 105 },
+    w: 82,
+    ab: 'Infectate',
+    isAlternateForme: true
+  },
+  'Froslass-Mega': {
+    t1: 'Ice',
+    t2: 'Ghost',
+    bs: { hp: 70, at: 80, df: 90, sa: 120, sd: 90, sp: 130 },
+    w: 26.6,
+    ab: 'Snow Warning',
+    isAlternateForme: true
+  },
+  'Golurk-Mega': {
+    t1: 'Ground',
+    t2: 'Ghost',
+    bs: { hp: 89, at: 150, df: 100, sa: 75, sd: 100, sp: 69 },
+    w: 330,
+    ab: 'Spectral Battery',
+    isAlternateForme: true
+  },
+  'Granbull-Mega': {
+    t1: 'Fairy',
+    t2: 'Fighting',
+    bs: { hp: 90, at: 160, df: 100, sa: 55, sd: 85, sp: 60 },
+    w: 48.7,
+    ab: 'Guts',
+    isAlternateForme: true
+  },
+  'Infernape-Mega': {
+    t1: 'Fire',
+    t2: 'Fighting',
+    bs: { hp: 76, at: 134, df: 86, sa: 134, sd: 86, sp: 118 },
+    w: 55,
+    ab: 'Infiltrator',
+    isAlternateForme: true
+  },
+  'Kecleon-Mega': {
+    t1: 'Normal',
+    bs: { hp: 60, at: 110, df: 100, sa: 90, sd: 140, sp: 40 },
+    w: 2,
+    ab: 'Protean',
+    isAlternateForme: true
+  },
+  'Krookodile-Mega': {
+    t1: 'Ground',
+    t2: 'Dark',
+    bs: { hp: 95, at: 142, df: 105, sa: 75, sd: 95, sp: 107 },
+    w: 96.3,
+    ab: 'Frisk',
+    isAlternateForme: true
+  },
+  'Lanturn-Mega': {
+    t1: 'Water',
+    t2: 'Electric',
+    bs: { hp: 125, at: 58, df: 98, sa: 96, sd: 116, sp: 67 },
+    w: 22.5,
+    ab: 'Thunderstorm',
+    isAlternateForme: true
+  },
+  'Luxray-Mega': {
+    t1: 'Electric',
+    t2: 'Dark',
+    bs: { hp: 80, at: 160, df: 94, sa: 105, sd: 94, sp: 90 },
+    w: 42,
+    ab: 'Strong Jaw',
+    isAlternateForme: true
+  },
+  'Meganium-Mega': {
+    t1: 'Grass',
+    t2: 'Fairy',
+    bs: { hp: 80, at: 87, df: 130, sa: 118, sd: 130, sp: 80 },
+    w: 100.5,
+    ab: 'Misty Surge',
+    isAlternateForme: true
+  },
+  'Miltank-Mega': {
+    t1: 'Normal',
+    bs: { hp: 95, at: 110, df: 125, sa: 70, sd: 90, sp: 100 },
+    w: 75.5,
+    ab: 'Unaware',
+    isAlternateForme: true
+  },
+  'Rapidash-Mega': {
+    t1: 'Fire',
+    t2: 'Fairy',
+    bs: { hp: 65, at: 120, df: 105, sa: 80, sd: 105, sp: 125 },
+    w: 95,
+    ab: 'Pixilate',
+    isAlternateForme: true
+  },
+  'Roserade-Mega': {
+    t1: 'Grass',
+    t2: 'Poison',
+    bs: { hp: 60, at: 70, df: 90, sa: 155, sd: 135, sp: 105 },
+    w: 14.5,
+    ab: 'Merciless',
+    isAlternateForme: true
+  },
+  'Staraptor-Mega': {
+    t1: 'Fighting',
+    t2: 'Flying',
+    bs: { hp: 85, at: 140, df: 100, sa: 65, sd: 90, sp: 105 },
+    w: 24.9,
+    ab: 'Terrify',
+    isAlternateForme: true
+  },
+  'Torterra-Mega': {
+    t1: 'Grass',
+    t2: 'Ground',
+    bs: { hp: 95, at: 144, df: 150, sa: 55, sd: 125, sp: 56 },
+    w: 310,
+    ab: 'Solid Rock',
+    isAlternateForme: true
+  },
+  'Typhlosion-Mega': {
+    t1: 'Fire',
+    t2: 'Electric',
+    bs: { hp: 78, at: 124, df: 88, sa: 129, sd: 95, sp: 120 },
+    w: 79.5,
+    ab: 'Reckless',
+    isAlternateForme: true
+  },
+  'Weezing-Mega': {
+    t1: 'Poison',
+    t2: 'Fire',
+    bs: { hp: 65, at: 90, df: 150, sa: 115, sd: 90, sp: 80 },
+    w: 9.5,
+    ab: 'Levitate',
+    isAlternateForme: true
+  },
+  'Pachirisu': { formes: ['Pachirisu', 'Pachirisu-Mega'] },
+  'Vespiquen': { formes: ['Vespiquen', 'Vespiquen-Mega'] },
+  'Goodra': { formes: ['Goodra', 'Goodra-Mega'] },
+  'Honchkrow': { formes: ['Honchkrow', 'Honchkrow-Mega'] },
+  'Sudowoodo': { formes: ['Sudowoodo', 'Sudowoodo-Mega'] },
+  'Beartic': { formes: ['Beartic', 'Beartic-Mega'] },
+  'Crobat': { formes: ['Crobat', 'Crobat-Mega'] },
+  'Pachirisu-Mega': {
+    types: ['Electric'],
+    bs: {hp: 60, at: 75, df: 90, sa: 75, sd: 110, sp: 95},
+    weightkg: 3.9,
+    abilities: {0: 'Sharpened Fangs'},
+    baseSpecies: 'Pachirisu',
+  },
+  'Vespiquen-Mega': {
+    types: ['Bug', 'Rock'],
+    bs: {hp: 70, at: 80, df: 122, sa: 100, sd: 127, sp: 75},
+    weightkg: 38.5,
+    abilities: {0: 'Magic Guard'},
+    baseSpecies: 'Vespiquen',
+  },
+  'Goodra-Mega': {
+    types: ['Dragon', 'Poison'],
+    bs: {hp: 90, at: 130, df: 85, sa: 140, sd: 175, sp: 80},
+    weightkg: 150.5,
+    abilities: {0: 'Gooey'},
+    baseSpecies: 'Goodra',
+  },
+  'Honchkrow-Mega': {
+    types: ['Dark', 'Flying'],
+    bs: {hp: 100, at: 140, df: 77, sa: 130, sd: 77, sp: 81},
+    weightkg: 27.3,
+    abilities: {0: 'Stakeout'},
+    baseSpecies: 'Honchkrow',
+  },
+  'Sudowoodo-Mega': {
+    types: ['Rock', 'Grass'],
+    bs: {hp: 70, at: 140, df: 130, sa: 30, sd: 80, sp: 60},
+    weightkg: 38,
+    abilities: {0: 'Rock Head'},
+    baseSpecies: 'Sudowoodo',
+  },
+  'Beartic-Mega': {
+    types: ['Ice', 'Fighting'],
+    bs: {hp: 95, at: 155, df: 95, sa: 95, sd: 95, sp: 70},
+    weightkg: 260,
+    abilities: {0: 'Weather Rush'},
+    baseSpecies: 'Beartic',
+  },
+  'Crobat-Mega': {
+    types: ['Poison', 'Flying'],
+    bs: {hp: 85, at: 126, df: 95, sa: 90, sd: 95, sp: 144},
+    weightkg: 75,
+    abilities: {0: 'Momentum'},
+    baseSpecies: 'Crobat',
+  }, 
 };
 
 const SS: {[name: string]: SpeciesData} = extend(true, {}, SM, SS_PATCH);

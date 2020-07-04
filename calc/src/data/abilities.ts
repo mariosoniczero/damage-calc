@@ -259,12 +259,14 @@ const SM = XY.concat([
 const SS = SM.concat([
   'Ball Fetch',
   'Cotton Down',
+  'Conflagrate',
   'Dauntless Shield',
   'Gorilla Tactics',
   'Gulp Missile',
   'Hunger Switch',
   'Ice Face',
   'Ice Scales',
+  'Infectate',
   'Intrepid Sword',
   'Libero',
   'Mimicry',
@@ -279,11 +281,16 @@ const SS = SM.concat([
   'Ripen',
   'Sand Spit',
   'Screen Cleaner',
+  'Sharpened Fangs'
+  'Spectral Battery',
   'Stalwart',
   'Steam Engine',
   'Steely Spirit',
+  'Terrify',
+  'Thunderstorm',
   'Unseen Fist',
   'Wandering Spirit',
+  'Weather Rush',
 ]);
 
 export const ABILITIES = [[], RBY, GSC, ADV, DPP, BW, XY, SM, SS];

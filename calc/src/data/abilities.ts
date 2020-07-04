@@ -281,7 +281,7 @@ const SS = SM.concat([
   'Ripen',
   'Sand Spit',
   'Screen Cleaner',
-  'Sharpened Fangs'
+  'Sharpened Fangs',
   'Spectral Battery',
   'Stalwart',
   'Steam Engine',

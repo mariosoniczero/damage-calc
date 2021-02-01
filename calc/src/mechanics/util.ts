@@ -2,6 +2,7 @@ import {
   Generation,
   ID,
   ItemName,
+  MoveCategory,
   NatureName,
   StatName,
   StatsTable,
@@ -373,8 +374,30 @@ export function getFinalDamage(
   return OF16(pokeRound(Math.max(1, OF32(damageAmount * finalMod) / 0x1000)));
 }
 
+/**
+ * Determines which move category Shell Side Arm should behave as.
+ *
+ * A simplified formula can be used here compared to what the research
+ * suggests as we do not want to implement the random tiebreak element of
+ * move - instead we simply default to 'Special' and allow the user to override
+ * this by manually adjusting the move's category.
+ *
+ * See also:
+ * {@link https://github.com/smogon/pokemon-showdown/commit/65d2bb5d}
+ *
+ * @param source Attacking pokemon (after stat modifications)
+ * @param target Target pokemon (after stat modifications)
+ * @returns 'Physical' | 'Special'
+ */
+export function getShellSideArmCategory(source: Pokemon, target: Pokemon): MoveCategory {
+  const physicalDamage = source.stats.atk / target.stats.def;
+  const specialDamage = source.stats.spa / target.stats.spd;
+  return physicalDamage > specialDamage ? 'Physical' : 'Special';
+}
+
 export function getWeightFactor(pokemon: Pokemon) {
-  return pokemon.hasAbility('Heavy Metal') ? 2 : pokemon.hasAbility('Light Metal') ? 0.5 : 1;
+  return pokemon.hasAbility('Heavy Metal') ? 2
+    : (pokemon.hasAbility('Light Metal') || pokemon.hasItem('Float Stone')) ? 0.5 : 1;
 }
 
 export function countBoosts(gen: Generation, boosts: StatsTable) {

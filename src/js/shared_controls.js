@@ -367,10 +367,10 @@ $(".move-selector").change(function () {
 				}
 				if (gen < 3) {
 					var hpDV = calc.Stats.getHPDV({
-						atk: pokemon.ivs.atk,
-						def: pokemon.ivs.def,
-						spe: pokemon.ivs.spe,
-						spc: pokemon.ivs.spa
+						atk: pokeObj.find(".at .ivs").val(),
+						def: pokeObj.find(".df .ivs").val(),
+						spe: pokeObj.find(".sp .ivs").val(),
+						spc: pokeObj.find(".sa .ivs").val()
 					});
 					pokeObj.find(".hp .ivs").val(calc.Stats.DVToIV(hpDV));
 					pokeObj.find(".hp .dvs").val(hpDV);
@@ -569,7 +569,7 @@ function formatMovePool(moves) {
 
 function isKnownDamagingMove(move) {
 	var m = GENERATION.moves.get(calc.toID(move));
-	return m && m.bp;
+	return m && m.basePower;
 }
 
 function selectMovesFromRandomOptions(moves) {
@@ -714,6 +714,12 @@ function createPokemon(pokeInfo) {
 		for (var i = 0; i < 4; i++) {
 			var moveName = set.moves[i];
 			pokemonMoves.push(new calc.Move(gen, moves[moveName] ? moveName : "(No Move)", {ability: ability, item: item}));
+		}
+
+		if (isRandoms) {
+			pokemonMoves = pokemonMoves.filter(function (move) {
+				return move.category !== "Status";
+			});
 		}
 
 		return new calc.Pokemon(gen, name, {
@@ -924,14 +930,14 @@ var SETDEX = [
 ];
 var RANDDEX = [
 	{},
-	typeof RANDOM_RBY === 'undefined' ? {} : RANDOM_RBY,
-	typeof RANDOM_GSC === 'undefined' ? {} : RANDOM_GSC,
-	typeof RANDOM_ADV === 'undefined' ? {} : RANDOM_ADV,
-	typeof RANDOM_DPP === 'undefined' ? {} : RANDOM_DPP,
-	typeof RANDOM_BW === 'undefined' ? {} : RANDOM_BW,
-	typeof RANDOM_XY === 'undefined' ? {} : RANDOM_XY,
-	typeof RANDOM_SM === 'undefined' ? {} : RANDOM_SM,
-	typeof RANDOM_SS === 'undefined' ? {} : RANDOM_SS,
+	typeof GEN1RANDOMBATTLE === 'undefined' ? {} : GEN1RANDOMBATTLE,
+	typeof GEN2RANDOMBATTLE === 'undefined' ? {} : GEN2RANDOMBATTLE,
+	typeof GEN3RANDOMBATTLE === 'undefined' ? {} : GEN3RANDOMBATTLE,
+	typeof GEN4RANDOMBATTLE === 'undefined' ? {} : GEN4RANDOMBATTLE,
+	typeof GEN5RANDOMBATTLE === 'undefined' ? {} : GEN5RANDOMBATTLE,
+	typeof GEN6RANDOMBATTLE === 'undefined' ? {} : GEN6RANDOMBATTLE,
+	typeof GEN7RANDOMBATTLE === 'undefined' ? {} : GEN7RANDOMBATTLE,
+	typeof GEN8RANDOMBATTLE === 'undefined' ? {} : GEN8RANDOMBATTLE,
 ];
 var gen, genWasChanged, notation, pokedex, setdex, randdex, typeChart, moves, abilities, items, calcHP, calcStat, GENERATION;
 $(".gen").change(function () {

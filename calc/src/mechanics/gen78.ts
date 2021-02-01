@@ -34,6 +34,7 @@ import {
   getFinalDamage,
   getModifiedStat,
   getMoveEffectiveness,
+  getShellSideArmCategory,
   getWeightFactor,
   handleFixedDamageMoves,
   isGrounded,
@@ -308,6 +309,11 @@ export function calculateSMSS(
     return result;
   }
 
+  const weightBasedMove = move.named('Heat Crash', 'Heavy Slam', 'Low Kick', 'Grass Knot');
+  if (defender.isDynamaxed && weightBasedMove) {
+    return result;
+  }
+
   desc.HPEVs = `${defender.evs.hp} HP`;
 
   const fixedDamage = handleFixedDamageMoves(attacker, move);
@@ -390,7 +396,7 @@ export function calculateSMSS(
     desc.moveBP = basePower;
     break;
   case 'Rising Voltage':
-    basePower = move.bp * (field.hasTerrain('Electric') ? 2 : 1);
+    basePower = isGrounded(defender, field) && field.hasTerrain('Electric') ? move.bp * 2 : move.bp;
     desc.moveBP = basePower;
     break;
   case 'Gyro Ball':
@@ -398,7 +404,7 @@ export function calculateSMSS(
     desc.moveBP = basePower;
     break;
   case 'Poltergeist':
-    basePower = move.bp * (!defender.hasItem ? 0 : 1);
+    basePower = move.bp * (!defender.item ? 0 : 1);
     desc.moveBP = basePower;
     break;
   case 'Punishment':
@@ -465,6 +471,7 @@ export function calculateSMSS(
     desc.moveBP = basePower;
     desc.attackerItem = attacker.item;
     break;
+  case 'Dragon Energy':
   case 'Eruption':
   case 'Water Spout':
     basePower = Math.max(1, Math.floor((150 * attacker.curHP()) / attacker.maxHP()));
@@ -720,9 +727,14 @@ export function calculateSMSS(
     move.category = attackSource.stats.atk > attackSource.stats.spa ? 'Physical' : 'Special';
   }
   const attackStat =
-    (move.named('Shell Side Arm') && defender.stats.def < defender.stats.spd) ? 'atk'
-    : move.named('Body Press') ? 'def'
-    : move.category === 'Special' ? 'spa' : 'atk';
+    move.named('Shell Side Arm') &&
+    getShellSideArmCategory(attacker, defender) === 'Physical'
+      ? 'atk'
+      : move.named('Body Press')
+        ? 'def'
+        : move.category === 'Special'
+          ? 'spa'
+          : 'atk';
   desc.attackEVs =
     move.named('Foul Play')
       ? getEVDescriptionText(gen, defender, attackStat, defender.nature)
@@ -782,11 +794,14 @@ export function calculateSMSS(
   } else if (attacker.hasAbility('Flash Fire') && attacker.abilityOn && move.hasType('Fire')) {
     atMods.push(0x1800);
     desc.attackerAbility = 'Flash Fire';
-  } else if (attacker.hasAbility('Steelworker') && move.hasType('Steel')) {
+  } else if (
+    (attacker.hasAbility('Steelworker') && move.hasType('Steel')) ||
+    (attacker.hasAbility('Dragon\'s Maw') && move.hasType('Dragon')) ||
+    (attacker.hasAbility('Transistor') && move.hasType('Electric'))
+  ) {
     atMods.push(0x1800);
     desc.attackerAbility = attacker.ability;
-  } else if (
-    attacker.hasAbility('Stakeout') && attacker.abilityOn) {
+  } else if (attacker.hasAbility('Stakeout') && attacker.abilityOn) {
     atMods.push(0x2000);
     desc.attackerAbility = attacker.ability;
   } else if (
@@ -814,7 +829,7 @@ export function calculateSMSS(
   }
 
   if ((attacker.hasItem('Thick Club') &&
-       attacker.named('Cubone', 'Marowak', 'Marowak-Alola') &&
+       attacker.named('Cubone', 'Marowak', 'Marowak-Alola', 'Marowak-Alola-Totem') &&
        move.category === 'Physical') ||
       (attacker.hasItem('Deep Sea Tooth') &&
        attacker.named('Clamperl') &&
@@ -839,7 +854,7 @@ export function calculateSMSS(
 
   let defense: number;
   const hitsPhysical = move.defensiveCategory === 'Physical' ||
-    (move.named('Shell Side Arm') && defender.stats.def < defender.stats.spd);
+    (move.named('Shell Side Arm') && getShellSideArmCategory(attacker, defender) === 'Physical');
   const defenseStat = hitsPhysical ? 'def' : 'spd';
   desc.defenseEVs = getEVDescriptionText(gen, defender, defenseStat, defender.nature);
   if (defender.boosts[defenseStat] === 0 ||
@@ -873,9 +888,8 @@ export function calculateSMSS(
     dfMods.push(0x1800);
     desc.defenderAbility = defender.ability;
     desc.weather = field.weather;
-    // TODO: where is Dauntless shield applied in the modifier order?
   } else if (
-    defender.hasAbility('Grass Pelt', 'Dauntless Shield') &&
+    defender.hasAbility('Grass Pelt') &&
     field.hasTerrain('Grassy') &&
     hitsPhysical
   ) {
@@ -1060,7 +1074,8 @@ export function calculateSMSS(
   }
 
   if (move.hasType(getBerryResistType(defender.item)) &&
-      (typeEffectiveness > 1 || move.hasType('Normal')) && !attacker.hasAbility('Unnerve')) {
+      (typeEffectiveness > 1 || move.hasType('Normal')) &&
+      !attacker.hasAbility('Unnerve', 'As One (Glastrier)', 'As One (Spectrier)')) {
     finalMods.push(0x800);
     desc.defenderItem = defender.item;
   }

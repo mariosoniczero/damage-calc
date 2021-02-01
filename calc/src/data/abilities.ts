@@ -257,11 +257,17 @@ const SM = XY.concat([
 ]);
 
 const SS = SM.concat([
+  'As One (Glastrier)',
+  'As One (Spectrier)',
   'Ball Fetch',
+  'Chilling Neigh',
   'Cotton Down',
   'Conflagrate',
+  'Curious Medicine',
   'Dauntless Shield',
+  'Dragon\'s Maw',
   'Gorilla Tactics',
+  'Grim Neigh',
   'Gulp Missile',
   'Hunger Switch',
   'Ice Face',
@@ -288,6 +294,7 @@ const SS = SM.concat([
   'Steely Spirit',
   'Terrify',
   'Thunderstorm',
+  'Transistor',
   'Unseen Fist',
   'Wandering Spirit',
   'Weather Rush',

@@ -28,7 +28,7 @@ const EV_ITEMS = [
 ];
 
 export function isGrounded(pokemon: Pokemon, field: Field) {
-  return (field.isGravity ||
+  return (field.isGravity || pokemon.hasItem('Iron Ball') ||
     (!pokemon.hasType('Flying') &&
       !pokemon.hasAbility('Levitate') &&
       !pokemon.hasItem('Air Balloon')));
@@ -163,9 +163,18 @@ export function checkForecast(pokemon: Pokemon, weather?: Weather) {
   }
 }
 
-export function checkKlutz(pokemon: Pokemon) {
-  if (pokemon.hasAbility('Klutz') && !EV_ITEMS.includes(pokemon.item!)) {
+export function checkItem(pokemon: Pokemon, magicRoomActive?: boolean) {
+  if (
+    pokemon.hasAbility('Klutz') && !EV_ITEMS.includes(pokemon.item!) ||
+      magicRoomActive
+  ) {
     pokemon.item = '' as ItemName;
+  }
+}
+
+export function checkWonderRoom(pokemon: Pokemon, wonderRoomActive?: boolean) {
+  if (wonderRoomActive) {
+    [pokemon.rawStats.def, pokemon.rawStats.spd] = [pokemon.rawStats.spd, pokemon.rawStats.def];
   }
 }
 
@@ -181,6 +190,9 @@ export function checkIntimidate(gen: Generation, source: Pokemon, target: Pokemo
       target.boosts.atk = Math.max(-6, target.boosts.atk - 2);
     } else {
       target.boosts.atk = Math.max(-6, target.boosts.atk - 1);
+    }
+    if (target.hasAbility('Competitive')) {
+      target.boosts.spa = Math.min(6, target.boosts.spa + 2);
     }
   }
 }
@@ -201,9 +213,13 @@ export function checkTerrify(gen: Generation, source: Pokemon, target: Pokemon) 
   }
 }
 
-export function checkDownload(source: Pokemon, target: Pokemon) {
+export function checkDownload(source: Pokemon, target: Pokemon, wonderRoomActive?: boolean) {
   if (source.hasAbility('Download')) {
-    if (target.stats.spd <= target.stats.def) {
+    let def = target.stats.def;
+    let spd = target.stats.spd;
+    // We swap the defense stats again here since Download ignores Wonder Room
+    if (wonderRoomActive) [def, spd] = [spd, def];
+    if (spd <= def) {
       source.boosts.spa = Math.min(6, source.boosts.spa + 1);
     } else {
       source.boosts.atk = Math.min(6, source.boosts.atk + 1);
@@ -298,7 +314,7 @@ export function checkMultihitBoost(
         defender.stats.def = getModifiedStat(defender.rawStats.def, defender.boosts.def, gen);
       }
     }
-    defender.boosts.spe += Math.min(defender.boosts.spe + 2, 6);
+    defender.boosts.spe = Math.min(defender.boosts.spe + 2, 6);
     defender.stats.spe = getFinalSpeed(gen, defender, field, field.defenderSide);
     desc.defenderAbility = defender.ability;
   }
@@ -335,10 +351,10 @@ export function checkMultihitBoost(
 }
 
 export function chainMods(mods: number[]) {
-  let M = 0x1000;
+  let M = 4096;
   for (const mod of mods) {
-    if (mod !== 0x1000) {
-      M = (M * mod + 0x800) >> 12;
+    if (mod !== 4096) {
+      M = (M * mod + 2048) >> 12;
     }
   }
   return M;
@@ -366,12 +382,12 @@ export function getFinalDamage(
   let damageAmount = Math.floor(OF32(baseAmount * (85 + i)) / 100);
   // If the stabMod would not accomplish anything we avoid applying it because it could cause
   // us to calculate damage overflow incorrectly (DaWoblefet)
-  if (stabMod !== 0x1000) damageAmount = OF32(damageAmount * stabMod) / 0x1000;
+  if (stabMod !== 4096) damageAmount = OF32(damageAmount * stabMod) / 4096;
   damageAmount = Math.floor(OF32(pokeRound(damageAmount) * effectiveness));
 
   if (isBurned) damageAmount = Math.floor(damageAmount / 2);
-  if (protect) damageAmount = pokeRound(OF32(damageAmount * 0x400) / 0x1000);
-  return OF16(pokeRound(Math.max(1, OF32(damageAmount * finalMod) / 0x1000)));
+  if (protect) damageAmount = pokeRound(OF32(damageAmount * 1024) / 4096);
+  return OF16(pokeRound(Math.max(1, OF32(damageAmount * finalMod) / 4096)));
 }
 
 /**
@@ -448,10 +464,10 @@ export function pokeRound(num: number) {
 
 // 16-bit Overflow
 export function OF16(n: number) {
-  return n > 0xFFFF ? n % 0x10000 : n;
+  return n > 65535 ? n % 65536 : n;
 }
 
 // 32-bit Overflow
 export function OF32(n: number) {
-  return n > 0xFFFFFFFF ? n % 0x100000000 : n;
+  return n > 4294967295 ? n % 4294967296 : n;
 }

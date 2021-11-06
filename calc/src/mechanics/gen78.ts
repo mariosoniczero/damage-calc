@@ -287,6 +287,7 @@ export function calculateSMSS(
       (move.hasType('Grass') && defender.hasAbility('Sap Sipper')) ||
       (move.hasType('Fire') && defender.hasAbility('Flash Fire')) ||
       (move.hasType('Water') && defender.hasAbility('Dry Skin', 'Storm Drain', 'Water Absorb')) ||
+      (move.hasType('Bug') && defender.hasAbility('Fly Trap')) ||
       (move.hasType('Electric') &&
         defender.hasAbility('Lightning Rod', 'Motor Drive', 'Volt Absorb')) ||
       (move.hasType('Ground') &&
@@ -463,7 +464,7 @@ export function calculateSMSS(
     } else {
       stabMod = 6144;
     }
-  } else if (attacker.hasAbility('Protean', 'Libero')) {
+  } else if (attacker.hasAbility('Protean', 'Libero', 'Dragon Style')) {
     stabMod = 6144;
     desc.attackerAbility = attacker.ability;
   }
@@ -832,7 +833,7 @@ export function calculateBPModsSMSS(
 
   // Technician looks at the move's original BP, not the BP up to this point
   if ((attacker.hasAbility('Technician') && move.bp <= 60) ||
-    (attacker.hasAbility('Flare Boost') &&
+    (attacker.hasAbility('Flare Boost', 'Hindenburg') &&
       attacker.hasStatus('brn') && move.category === 'Special') ||
     (attacker.hasAbility('Toxic Boost') &&
       attacker.hasStatus('psn', 'tox') && move.category === 'Physical') ||
@@ -871,6 +872,7 @@ export function calculateBPModsSMSS(
         field.hasWeather('Sand') && move.hasType('Rock', 'Ground', 'Steel')) ||
       (attacker.hasAbility('Analytic') &&
         (turnOrder !== 'first' || field.defenderSide.isSwitching === 'out')) ||
+      (attacker.hasAbility('Opportunistic') && turnOrder === 'first') ||
       (attacker.hasAbility('Tough Claws') && move.flags.contact) ||
       (attacker.hasAbility('Punk Rock') && move.flags.sound)
   ) {

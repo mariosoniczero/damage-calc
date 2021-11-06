@@ -8,6 +8,8 @@
     "calc": "file:calc"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/mocha": "^9.0.0",
     "eslint": "^7.26.0",
     "express": "^4.17.1",
     "subpkg": "^4.1.0"

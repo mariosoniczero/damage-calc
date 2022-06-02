@@ -295,7 +295,7 @@ export function checkMultihitBoost(
   }
 
   if (defender.hasAbility('Stamina')) {
-    if (attacker.hasAbility('Unaware')) {
+    if (attacker.hasAbility('Unaware') || attacker.hasAbility('Brainless')) {
       desc.attackerAbility = attacker.ability;
     } else {
       defender.boosts.def = Math.min(defender.boosts.def + 1, 6);
@@ -303,7 +303,7 @@ export function checkMultihitBoost(
       desc.defenderAbility = defender.ability;
     }
   } else if (defender.hasAbility('Weak Armor')) {
-    if (attacker.hasAbility('Unaware')) {
+    if (attacker.hasAbility('Unaware') || attacker.hasAbility('Brainless')) {
       desc.attackerAbility = attacker.ability;
     } else {
       if (defender.hasItem('White Herb') && !usedWhiteHerb) {
@@ -321,7 +321,7 @@ export function checkMultihitBoost(
 
   const simple = attacker.hasAbility('Simple') ? 2 : 1;
   if (move.dropsStats) {
-    if (attacker.hasAbility('Unaware')) {
+    if (attacker.hasAbility('Unaware') || attacker.hasAbility('Brainless')) {
       desc.attackerAbility = attacker.ability;
     } else {
       // No move with dropsStats has fancy logic regarding category here

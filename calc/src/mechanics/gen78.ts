@@ -135,8 +135,8 @@ export function calculateSMSS(
   // Merciless does not ignore Shell Armor, damage dealt to a poisoned Pokemon with Shell Armor
   // will not be a critical hit (UltiMario)
   const isCritical = !defender.hasAbility('Battle Armor', 'Shell Armor') &&
-    (move.isCrit || (attacker.hasAbility('Merciless') && defender.hasStatus('psn', 'tox'))) &&
-    move.timesUsed === 1;
+    (move.isCrit || (attacker.hasAbility('Merciless') && defender.hasStatus('psn', 'tox')) ||
+	(attacker.hasAbility('Arsonist') && defender.hasStatus('brn'))) && move.timesUsed === 1;
 
   let type = move.type;
   if (move.named('Weather Ball')) {
@@ -929,6 +929,19 @@ export function calculateBPModsSMSS(
     bpMods.push(5120);
     desc.defenderAbility = defender.ability;
   }
+  
+  // GPL
+
+  if ((attacker.hasAbility('Lunar Power') && (move.named('Moonblast')))) {
+    bpMods.push(4505);
+	desc.attackerAbility = attacker.ability;
+  } 
+  
+  if ((attacker.hasAbility('Spectral Battery') && ((move.named('Phantom Force')) ||
+  (move.named('Dig')) || (move.named('Fly')) || (move.named('Solar Beam'))))) {
+    bpMods.push(5325);
+	desc.attackerAbility = attacker.ability;
+  } 
 
   // Items
 
@@ -1075,6 +1088,12 @@ export function calculateAtModsSMSS(
     (attacker.hasAbility('Huge Power', 'Pure Power') && move.category === 'Physical')
   ) {
     atMods.push(8192);
+    desc.attackerAbility = attacker.ability;
+  } else if (
+    (attacker.hasAbility('Supernova') && 
+	(move.named('Explosion') || (move.named('Self-Destruct'))))
+  ) {
+	atMods.push(8192);
     desc.attackerAbility = attacker.ability;
   }
 

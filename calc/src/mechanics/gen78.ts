@@ -1305,7 +1305,7 @@ export function calculateFinalModsSMSS(
   } else if (attacker.hasItem('Life Orb')) {
     finalMods.push(5324);
     desc.attackerItem = attacker.item;
-  } else if ((attacker.hasItem('Metronome') || attacker.hasAbility('Crescendo')) && move.timesUsedWithMetronome! >= 1) {
+  } else if (attacker.hasItem('Metronome') && move.timesUsedWithMetronome! >= 1) {
     const timesUsedWithMetronome = Math.floor(move.timesUsedWithMetronome!);
     if (timesUsedWithMetronome <= 4) {
       finalMods.push(4096 + timesUsedWithMetronome * 819);
@@ -1313,6 +1313,14 @@ export function calculateFinalModsSMSS(
       finalMods.push(8192);
     }
     desc.attackerItem = attacker.item;
+  } else if (attacker.hasAbility('Crescendo') && move.timesUsedWithMetronome! >= 1) {
+    const timesUsedWithMetronome = Math.floor(move.timesUsedWithMetronome!);
+    if (timesUsedWithMetronome <= 4) {
+      finalMods.push(4096 + timesUsedWithMetronome * 819);
+    } else {
+      finalMods.push(8192);
+    }
+    desc.attackerAbility = attacker.ability;
   }
 
   if (move.hasType(getBerryResistType(defender.item)) &&

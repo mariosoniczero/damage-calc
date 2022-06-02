@@ -210,6 +210,9 @@ export function checkTerrify(gen: Generation, source: Pokemon, target: Pokemon) 
     } else {
       target.boosts.spa = Math.max(-6, target.boosts.spa - 1);
     }
+	if (target.hasAbility('Defiant')) {
+      target.boosts.atk = Math.min(6, target.boosts.atk + 2);
+    }
   }
 }
 

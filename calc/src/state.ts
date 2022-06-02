@@ -35,6 +35,8 @@ export namespace State {
     gameType: I.GameType;
     weather?: I.Weather;
     terrain?: I.Terrain;
+    isMagicRoom?: boolean;
+    isWonderRoom?: boolean;
     isGravity?: boolean;
     isAuraBreak?: boolean;
     isFairyAura?: boolean;
@@ -61,6 +63,7 @@ export namespace State {
     isFriendGuard?: boolean;
     isAuroraVeil?: boolean;
     isBattery?: boolean;
+    isPowerSpot?: boolean;
     isSwitching?: 'out' | 'in';
   }
 }

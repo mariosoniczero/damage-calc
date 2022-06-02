@@ -1,4 +1,4 @@
-﻿import * as I from './interface';
+import * as I from './interface';
 import {toID, extend, DeepPartial, assignWithout} from '../util';
 
 export interface SpeciesData {
@@ -3048,6 +3048,13 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     gender: 'N',
     abilities: {0: 'Pressure'},
   },
+  Dorsoil: {
+    types: ['Ground'],
+    bs: {hp: 103, at: 72, df: 52, sa: 61, sd: 52, sp: 65},
+    weightkg: 145,
+    nfe: true,
+    abilities: {0: 'Oblivious'},
+  },
   Drapion: {
     types: ['Poison', 'Dark'],
     bs: {hp: 70, at: 90, df: 110, sa: 60, sd: 75, sp: 95},
@@ -3066,6 +3073,13 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 1.2,
     nfe: true,
     abilities: {0: 'Aftermath'},
+  },
+  Duohm: {
+    types: ['Electric', 'Dragon'],
+    bs: {hp: 88, at: 40, df: 103, sa: 77, sd: 60, sp: 60},
+    weightkg: 19.2,
+    nfe: true,
+    abilities: {0: 'Shield Dust'},
   },
   Dusknoir: {
     types: ['Ghost'],
@@ -3364,6 +3378,13 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     nfe: true,
     abilities: {0: 'Blaze'},
   },
+  Monohm: {
+    types: ['Electric'],
+    bs: {hp: 53, at: 40, df: 58, sa: 67, sd: 55, sp: 55},
+    weightkg: 4.1,
+    nfe: true,
+    abilities: {0: 'Shield Dust'},
+  },
   Mothim: {
     types: ['Bug', 'Flying'],
     bs: {hp: 70, at: 94, df: 50, sa: 94, sd: 50, sp: 66},
@@ -3376,6 +3397,13 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 105,
     nfe: true,
     abilities: {0: 'Pickup'},
+  },
+  Nohface: {
+    types: ['Ghost'],
+    bs: {hp: 50, at: 73, df: 50, sa: 30, sd: 50, sp: 80},
+    weightkg: 5.9,
+    nfe: true,
+    abilities: {0: 'Frisk'},
   },
   Pachirisu: {
     types: ['Electric'],
@@ -3437,6 +3465,13 @@ const DPP_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 60, at: 55, df: 145, sa: 75, sd: 150, sp: 40},
     weightkg: 340,
     abilities: {0: 'Sturdy'},
+  },
+  Protowatt: {
+    types: ['Electric', 'Water'],
+    bs: {hp: 51, at: 44, df: 33, sa: 43, sd: 34, sp: 65},
+    weightkg: 0.1,
+    nfe: true,
+    abilities: {0: 'Trace'},
   },
   Purugly: {
     types: ['Normal'],
@@ -7500,6 +7535,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Snorlax: {otherFormes: ['Snorlax-Gmax']},
   Stunfisk: {otherFormes: ['Stunfisk-Galar']},
   Venusaur: {otherFormes: ['Venusaur-Gmax', 'Venusaur-Mega']},
+  Voodoom: {bs: {sa: 130}},
   Yamask: {otherFormes: ['Yamask-Galar']},
   Zapdos: {otherFormes: ['Zapdos-Galar']},
   Zigzagoon: {otherFormes: ['Zigzagoon-Galar']},
@@ -7666,6 +7702,13 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     abilities: {0: 'Strong Jaw'},
     nfe: true,
   },
+  Chromera: {
+    types: ['Dark', 'Poison'],
+    bs: {hp: 85, at: 85, df: 115, sa: 115, sd: 100, sp: 100},
+    weightkg: 215,
+    abilities: {0: 'Color Change'},
+    gender: 'N',
+  },
   Cinderace: {
     types: ['Fire'],
     bs: {hp: 80, at: 116, df: 75, sa: 65, sd: 75, sp: 119},
@@ -7706,7 +7749,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 122, at: 130, df: 69, sa: 80, sd: 69, sp: 30},
     weightkg: 650,
     abilities: {0: 'Sheer Force'},
-    otherFormes: ['Copperajah-Gmax'],
+    otherFormes: ['Copperajah-Gmax', 'Copperajah-Mega'],
   },
   'Copperajah-Gmax': {
     types: ['Steel'],
@@ -8729,7 +8772,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   'Delcatty-Mega': {
     types: ['Normal', 'Ghost'],
-    bs: { hp: 70, at: 10, df: 115, sa: 125, sd: 115, sp: 65 },
+    bs: { hp: 70, at: 5, df: 115, sa: 130, sd: 115, sp: 65 },
     weightkg: 32.6,
     abilities: {0: 'Terrify'},
     baseSpecies: 'Delcatty',
@@ -8757,14 +8800,14 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   'Flygon-Mega-X': {
     types: ['Ground', 'Dragon'],
-    bs: { hp: 80, at: 135, df: 105, sa: 100, sd: 95, sp: 105 },
+    bs: { hp: 80, at: 145, df: 105, sa: 95, sd: 90, sp: 105 },
     weightkg: 82,
     abilities: {0: 'Levitate'},
     baseSpecies: 'Flygon',
   },
   'Flygon-Mega-Y': {
     types: ['Bug', 'Dragon'],
-    bs: { hp: 80, at: 100, df: 95, sa: 135, sd: 105, sp: 105 },
+    bs: { hp: 80, at: 95, df: 90, sa: 145, sd: 105, sp: 105 },
     weightkg: 82,
     abilities: {0: 'Infectate'},
     baseSpecies: 'Flygon',
@@ -8787,7 +8830,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     types: ['Fairy', 'Fighting'],
     bs: { hp: 90, at: 160, df: 100, sa: 55, sd: 85, sp: 60 },
     weightkg: 48.7,
-    abilities: {0: 'Guts'},
+    abilities: {0: 'Intimidate'},
     baseSpecies: 'Granbull',
   },
   'Infernape-Mega': {
@@ -8841,7 +8884,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   'Rapidash-Mega': {
     types: ['Fire', 'Fairy'],
-    bs: { hp: 65, at: 120, df: 105, sa: 80, sd: 105, sp: 125 },
+    bs: { hp: 65, at: 120, df: 95, sa: 100, sd: 95, sp: 125 },
     weightkg: 95,
     abilities: {0: 'Pixilate'},
     baseSpecies: 'Rapidash',
@@ -8896,10 +8939,10 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     baseSpecies: 'Pachirisu',
   },
   'Vespiquen-Mega': {
-    types: ['Bug', 'Rock'],
-    bs: {hp: 70, at: 80, df: 122, sa: 100, sd: 127, sp: 75},
+    types: ['Bug', 'Poison'],
+    bs: {hp: 70, at: 100, df: 132, sa: 60, sd: 137, sp: 75},
     weightkg: 38.5,
-    abilities: {0: 'Magic Guard'},
+    abilities: {0: 'Restore Order'},
     baseSpecies: 'Vespiquen',
   },
   'Goodra-Mega': {
@@ -8918,7 +8961,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   'Sudowoodo-Mega': {
     types: ['Rock', 'Grass'],
-    bs: {hp: 70, at: 140, df: 130, sa: 30, sd: 80, sp: 60},
+    bs: {hp: 70, at: 140, df: 130, sa: 20, sd: 80, sp: 70},
     weightkg: 38,
     abilities: {0: 'Rock Head'},
     baseSpecies: 'Sudowoodo',
@@ -8936,7 +8979,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 75,
     abilities: {0: 'Momentum'},
     baseSpecies: 'Crobat',
-  }, 
+  },
   Decidueye: {otherFormes: ['Decidueye-Mega']},
   Incineroar: {otherFormes: ['Incineroar-Mega']},
   Primarina: {otherFormes: ['Primarina-Mega']},
@@ -8988,7 +9031,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   },
   'Mightyena-Mega': {
     types: ['Dark', 'Fairy'],
-    bs: {hp: 70, at: 140, df: 80, sa: 30, sd: 70, sp: 130},
+    bs: {hp: 70, at: 140, df: 80, sa: 40, sd: 70, sp: 120},
     weightkg: 37,
     abilities: {0: 'Pack Tactics'},
     baseSpecies: 'Mightyena',
@@ -8999,6 +9042,53 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     weightkg: 34,
     abilities: {0: 'Refrigerate'},
     baseSpecies: 'Boltund',
+  },
+  Drifblim: {otherFormes: ['Drifblim-Mega']},
+  Carnivine: {otherFormes: ['Carnivine-Mega']},
+  Golisopod: {otherFormes: ['Golisopod-Mega']},
+  Wigglytuff: {otherFormes: ['Wigglytuff-Mega']},
+  Pangoro: {otherFormes: ['Pangoro-Mega']},
+  'Drifblim-Mega': {
+    types: ['Ghost', 'Flying'],
+    bs: {hp: 150, at: 90, df: 69, sa: 105, sd: 79, sp: 105},
+    weightkg: 15,
+    abilities: {0: 'Hindenburg'},
+    baseSpecies: 'Drifblim',
+  },
+  'Carnivine-Mega': {
+    types: ['Grass', 'Dark'],
+    bs: {hp: 74, at: 125, df: 82, sa: 95, sd: 82, sp: 96},
+    weightkg: 27,
+    abilities: {0: 'Fly Trap'},
+    baseSpecies: 'Carnivine',
+  },
+  'Copperajah-Mega': {
+    types: ['Steel', 'Fire'],
+    bs: {hp: 122, at: 155, df: 99, sa: 85, sd: 99, sp: 40},
+    weightkg: 650,
+    abilities: {0: 'Dry Skin'},
+    baseSpecies: 'Copperajah',
+  },
+  'Golisopod-Mega': {
+    types: ['Bug', 'Water'],
+    bs: {hp: 75, at: 155, df: 170, sa: 75, sd: 105, sp: 50},
+    weightkg: 108,
+    abilities: {0: 'Opportunistic'},
+    baseSpecies: 'Golisopod',
+  },
+  'Wigglytuff-Mega': {
+    types: ['Normal', 'Fairy'],
+    bs: {hp: 140, at: 50, df: 85, sa: 120, sd: 85, sp: 55},
+    weightkg: 12,
+    abilities: {0: 'Regenerator'},
+    baseSpecies: 'Wigglytuff',
+  },
+  'Pangoro-Mega': {
+    types: ['Fighting', 'Dragon'],
+    bs: {hp: 95, at: 144, df: 103, sa: 79, sd: 91, sp: 83},
+    weightkg: 136,
+    abilities: {0: 'Dragon Style'},
+    baseSpecies: 'Pangoro',
   },
 };
 

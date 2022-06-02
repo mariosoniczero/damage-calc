@@ -4,7 +4,10 @@
     "rootDir": "./src",
     "outDir": "dist",
     "downlevelIteration": true,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "typeRoots": ["./node_modules/@types"],
+
   },
+  "skipLibCheck": true,
   "exclude": ["dist"]
 }

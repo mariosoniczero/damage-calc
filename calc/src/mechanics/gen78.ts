@@ -356,7 +356,7 @@ export function calculateSMSS(
     move,
     field,
     desc,
-    isAerilate, isPixilate, isRefrigerate, isGalvanize, isNormalize
+    isAerilate, isPixilate, isRefrigerate, isGalvanize, isNormalize, isConflagrate, isInfectate
   );
   if (basePower === 0) {
     return result;
@@ -557,7 +557,9 @@ export function calculateBasePowerSMSS(
   isPixilate = false,
   isGalvanize = false,
   isRefrigerate = false,
-  isNormalize = false
+  isNormalize = false, 
+  isConflagrate = false,
+  isInfectate = false
 ) {
   const turnOrder = attacker.stats.spe > defender.stats.spe ? 'first' : 'last';
 
@@ -729,7 +731,9 @@ export function calculateBasePowerSMSS(
     isAerilate,
     isPixilate,
     isRefrigerate,
-    isNormalize
+    isNormalize, 
+    isConflagrate,
+    isInfectate
   );
   basePower = OF16(Math.max(1, pokeRound((basePower * chainMods(bpMods)) / 0x1000)));
   return basePower;
@@ -748,7 +752,9 @@ export function calculateBPModsSMSS(
   isPixilate = false,
   isGalvanize = false,
   isRefrigerate = false,
-  isNormalize = false
+  isNormalize = false, 
+  isConflagrate = false,
+  isInfectate = false
 ) {
   let resistedKnockOffDamage =
     !defender.item ||
@@ -805,7 +811,7 @@ export function calculateBPModsSMSS(
   }
 
   if (!move.isZ && !move.isMax &&
-      (isAerilate || isPixilate || isRefrigerate || isGalvanize || isNormalize)) {
+      (isAerilate || isPixilate || isRefrigerate || isGalvanize || isNormalize || isConflagrate)) {
     bpMods.push(0x1333);
     desc.attackerAbility = attacker.ability;
   } else if (
@@ -1060,6 +1066,7 @@ export function calculateAtModsSMSS(
     desc.attackerAbility = 'Flash Fire';
   } else if (
     (attacker.hasAbility('Steelworker') && move.hasType('Steel')) ||
+    (attacker.hasAbility('Heel Tactics') && move.hasType('Fighting')) ||
     (attacker.hasAbility('Dragon\'s Maw') && move.hasType('Dragon')) ||
     (attacker.hasAbility('Transistor') && move.hasType('Electric'))
   ) {
@@ -1299,7 +1306,7 @@ export function calculateFinalModsSMSS(
   } else if (attacker.hasItem('Life Orb')) {
     finalMods.push(0x14cc);
     desc.attackerItem = attacker.item;
-  } else if (attacker.hasItem('Metronome') && move.timesUsedWithMetronome! >= 1) {
+  } else if ((attacker.hasItem('Metronome') || attacker.hasAbility('Crescendo')) && move.timesUsedWithMetronome! >= 1) {
     const timesUsedWithMetronome = Math.floor(move.timesUsedWithMetronome!);
     if (timesUsedWithMetronome <= 4) {
       finalMods.push(0x1000 + timesUsedWithMetronome * 0x333);

@@ -9185,7 +9185,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 95, at: 145, df: 68, sa: 115, sd: 75, sp: 112},
     weightkg: 61,
     abilities: {0: 'Dark Warp'},
-    baseSpecies: 'Probopass',
+    baseSpecies: 'Grimmsnarl',
   },
   'Drampa-Mega': {
     types: ['Normal', 'Dragon'],

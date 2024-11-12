@@ -337,7 +337,7 @@ const SV = SS.concat([
   'Cud Chew',
   'Deadly Precision',
   'Decay',
-  'Divine Insipiration',
+  'Divine Inspiration',
   'Dragonhunter',
   'Earth Eater',
   'Electromorphosis',

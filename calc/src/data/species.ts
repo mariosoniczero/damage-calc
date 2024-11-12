@@ -9468,7 +9468,7 @@ const SS_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     types: ['Psychic'],
     bs: {hp: 65, at: 55, df: 115, sa: 125, sd: 115, sp: 95},
     weightkg: 15,
-    abilities: {0: 'Divine Insipiration'},
+    abilities: {0: 'Divine Inspiration'},
     baseSpecies: 'Xatu',
   },
   'Zoroark-Mega': {

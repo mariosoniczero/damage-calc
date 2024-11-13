@@ -277,6 +277,16 @@ export function calculateSMSSSV(
     if (move.isMax) {
       desc.moveType = type;
     }
+    if(defender.hasAbility('Perfect Mimicry')){
+      if (field.hasTerrain('Electric'))
+        defender.types[0]= 'Electric'
+      else if (field.hasTerrain('Grassy'))
+        defender.types[0]= 'Grass'
+      else if (field.hasTerrain('Misty'))
+        defender.types[0]= 'Fairy'
+      else if (field.hasTerrain('Psychic'))
+        defender.types[0]= 'Psychic'
+    }
 
     // If the Nature Power user has the ability Prankster, it cannot affect
     // Dark-types or grounded foes if Psychic Terrain is active
@@ -1642,6 +1652,10 @@ export function calculateDfModsSMSSSV(
     } else {
       desc[hitsPhysical ? 'isSwordOfRuin' : 'isBeadsOfRuin'] = true;
     }
+    dfMods.push(3072);
+  }
+  if(attacker.hasAbility('Deadly Precision')){
+    desc.attackerAbility = attacker.ability;
     dfMods.push(3072);
   }
 

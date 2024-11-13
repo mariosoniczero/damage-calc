@@ -126,6 +126,20 @@ export function getRecovery(
     }
   }
 
+  if (attacker.hasAbility('Soul Siphon') && attacker.hasType(move.type)) {
+    for (var i = 0; i < minD.length; i++) {
+        recovery[0] += Math.round(minD[i] * move.hits / 2);
+        recovery[1] += Math.round(maxD[i] * move.hits / 2);
+    }
+  }
+
+  if (attacker.hasAbility('Frosty Resurgence')) {
+    for (var i = 0; i < minD.length; i++) {
+        recovery[0] += Math.round(minD[i] * move.hits / 4);
+        recovery[1] += Math.round(maxD[i] * move.hits / 4);
+    }
+  }
+
   if (move.named('G-Max Finale')) {
     recovery[0] = recovery[1] = Math.round(attacker.maxHP() / 6);
   }

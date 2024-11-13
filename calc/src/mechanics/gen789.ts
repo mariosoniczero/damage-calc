@@ -160,7 +160,7 @@ export function calculateSMSSSV(
   const defenderAbilityIgnored = defender.hasAbility(
     'Armor Tail', 'Aroma Veil', 'Aura Break', 'Battle Armor',
     'Big Pecks', 'Bulletproof', 'Clear Body', 'Contrary',
-    'Damp', 'Dazzling', 'Disguise', 'Dry Skin',
+    'Damp', 'Dazzling', 'Disguise', 'Dragon Hunter', 'Dry Skin',
     'Earth Eater', 'Filter', 'Flash Fire', 'Flower Gift',
     'Flower Veil', 'Fluffy', 'Friend Guard', 'Fur Coat',
     'Good as Gold', 'Grass Pelt', 'Guard Dog', 'Heatproof',
@@ -170,10 +170,10 @@ export function calculateSMSSSV(
     'Lightning Rod', 'Limber', 'Magic Bounce', 'Magma Armor',
     'Marvel Scale', "Mind's Eye", 'Mirror Armor', 'Motor Drive',
     'Multiscale', 'Oblivious', 'Overcoat', 'Own Tempo',
-    'Pastel Veil', 'Punk Rock', 'Purifying Salt', 'Queenly Majesty',
+    'Pastel Veil', 'Pristine Armor', 'Punk Rock', 'Purifying Salt', 'Queenly Majesty',
     'Sand Veil', 'Sap Sipper', 'Shell Armor', 'Shield Dust',
     'Simple', 'Snow Cloak', 'Solid Rock', 'Soundproof',
-    'Sticky Hold', 'Storm Drain', 'Sturdy', 'Suction Cups',
+    'Sticky Hold', 'Storm Drain', 'Sturdy', 'Suction Cups', 'Sunken Sky',
     'Sweet Veil', 'Tangled Feet', 'Telepathy', 'Tera Shell',
     'Thermal Exchange', 'Thick Fat', 'Unaware', 'Vital Spirit',
     'Volt Absorb', 'Water Absorb', 'Water Bubble', 'Water Veil',
@@ -486,13 +486,14 @@ export function calculateSMSSSV(
   if ((defender.hasAbility('Wonder Guard') && typeEffectiveness <= 1) ||
       (move.hasType('Grass') && defender.hasAbility('Sap Sipper')) ||
       (move.hasType('Fire') && defender.hasAbility('Flash Fire', 'Well-Baked Body')) ||
-      (move.hasType('Water') && defender.hasAbility('Dry Skin', 'Storm Drain', 'Water Absorb')) ||
+      (move.hasType('Water') && defender.hasAbility('Dry Skin', 'Storm Drain', 'Sunken Sky', 'Water Absorb')) ||
       (move.hasType('Bug') && defender.hasAbility('Fly Trap')) ||
+      (move.hasType('Dragon') && defender.hasAbility('Dragonhunter')) ||
       (move.hasType('Electric') &&
         defender.hasAbility('Lightning Rod', 'Motor Drive', 'Volt Absorb')) ||
       (move.hasType('Ground') &&
         !field.isGravity && !move.named('Thousand Arrows') &&
-        !defender.hasItem('Iron Ball') && defender.hasAbility('Levitate')) ||
+        !defender.hasItem('Iron Ball') && defender.hasAbility('Levitate', 'Sunken Sky')) ||
       (move.flags.bullet && defender.hasAbility('Bulletproof')) ||
       (move.flags.sound && !move.named('Clangorous Soul') && defender.hasAbility('Soundproof')) ||
       (move.priority > 0 && defender.hasAbility('Queenly Majesty', 'Dazzling', 'Armor Tail')) ||
@@ -1162,7 +1163,8 @@ export function calculateBPModsSMSSSV(
     (attacker.hasAbility('Mega Launcher') && move.flags.pulse) ||
     (attacker.hasAbility('Strong Jaw') && move.flags.bite) ||
     (attacker.hasAbility('Steely Spirit') && move.hasType('Steel')) ||
-    (attacker.hasAbility('Sharpness') && move.flags.slicing)
+    (attacker.hasAbility('Sharpness') && move.flags.slicing) || 
+    (attacker.hasAbility('Magnetic Fists') && move.flags.punch)
   ) {
     bpMods.push(6144);
     desc.attackerAbility = attacker.ability;
@@ -1199,12 +1201,25 @@ export function calculateBPModsSMSSSV(
       (turnOrder !== 'first' || field.defenderSide.isSwitching === 'out')) ||
     (attacker.hasAbility('Opportunistic') && turnOrder === 'first') ||
 	(attacker.hasAbility('Tough Claws') && move.flags.contact) ||
-    (attacker.hasAbility('Punk Rock') && move.flags.sound)
+    (attacker.hasAbility('Punk Rock') && move.flags.sound) ||
+    (attacker.hasAbility('Machibuse') && attacker.curHP() == attacker.maxHP())
   ) {
     bpMods.push(5325);
     desc.attackerAbility = attacker.ability;
   }
-
+  if (attacker.hasAbility('Entrance')) {
+  let stat: StatID;
+    for (stat in defender.boosts) {
+      if (defender.boosts[stat] < 0 && (defender.status || defender.hasAbility('Comatose') ? 2 : 1)) {
+        bpMods.push(6144);
+        desc.attackerAbility = attacker.ability;
+      }
+      else if (defender.boosts[stat] < 0 || (defender.status || defender.hasAbility('Comatose') ? 2 : 1)) {
+        bpMods.push(5325);
+        desc.attackerAbility = attacker.ability;
+      }
+    }
+  }
   if (field.attackerSide.isBattery && move.category === 'Special') {
     bpMods.push(5325);
     desc.isBattery = true;
@@ -1384,7 +1399,8 @@ export function calculateAtModsSMSSSV(
   } else if (
     // Gorilla Tactics has no effect during Dynamax (Anubis)
     (attacker.hasAbility('Gorilla Tactics') && move.category === 'Physical' &&
-     !attacker.isDynamaxed)) {
+     !attacker.isDynamaxed) || (attacker.hasAbility('Heavy Artillery') && move.category === 'Special' ||
+     attacker.hasAbility('Hyperion') && move.category === 'Physical')) {
     atMods.push(6144);
     desc.attackerAbility = attacker.ability;
   } else if (
@@ -1405,12 +1421,17 @@ export function calculateAtModsSMSSSV(
     (attacker.hasAbility('Steelworker') && move.hasType('Steel')) ||
     (attacker.hasAbility('Heel Tactics') && move.hasType('Fighting')) ||
     (attacker.hasAbility('Dragon\'s Maw') && move.hasType('Dragon')) ||
-    (attacker.hasAbility('Rocky Payload') && move.hasType('Rock'))
+    (attacker.hasAbility('Rocky Payload') && move.hasType('Rock')) ||
+    (attacker.hasAbility('Anemochory') && move.hasType('Flying')) ||
+    (attacker.hasAbility('Elemental Mastery') && move.hasType('Electric') || move.hasType('Ice') || move.hasType('Fire')) 
   ) {
     atMods.push(6144);
     desc.attackerAbility = attacker.ability;
   } else if (attacker.hasAbility('Transistor') && move.hasType('Electric')) {
     atMods.push(gen.num >= 9 ? 5325 : 6144);
+    desc.attackerAbility = attacker.ability;
+  } else if (attacker.hasAbility('Dragonhunter') && move.hasType('Dragon')) {
+    atMods.push(5325);
     desc.attackerAbility = attacker.ability;
   } else if (attacker.hasAbility('Stakeout') && attacker.abilityOn) {
     atMods.push(8192);
@@ -1645,7 +1666,9 @@ export function calculateDfModsSMSSSV(
   ) {
     dfMods.push(8192);
     desc.defenderItem = defender.item;
-  }
+  } else if (defender.hasAbility('Pristine Armor'))
+    dfMods.push(5120)
+    desc.defenderAbility = defender.ability;
   return dfMods;
 }
 

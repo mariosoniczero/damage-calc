@@ -341,6 +341,7 @@ function autosetWeather(ability, i) {
 	}
 	switch (ability) {
 	case "Drought":
+	case "Greenhouse":
 	case "Orichalcum Pulse":
 		lastAutoWeather[i] = "Sun";
 		$("#sun").prop("checked", true);
@@ -349,11 +350,13 @@ function autosetWeather(ability, i) {
 		lastAutoWeather[i] = "Rain";
 		$("#rain").prop("checked", true);
 		break;
+	case "Lifestream":
 	case "Sand Stream":
 		lastAutoWeather[i] = "Sand";
 		$("#sand").prop("checked", true);
 		break;
 	case "Snow Warning":
+	case "Bizzare Blizzard":
 		if (gen >= 9) {
 			lastAutoWeather[i] = "Snow";
 			$("#snow").prop("checked", true);
@@ -406,14 +409,18 @@ function autosetTerrain(ability, i) {
 		$("#electric").prop("checked", true);
 		break;
 	case "Grassy Surge":
+	case "Greenhouse":
+	case "Hyperdrill Superseed":
 		lastAutoTerrain[i] = "Grassy";
 		$("#grassy").prop("checked", true);
 		break;
 	case "Misty Surge":
+	case "Lifestream":
 		lastAutoTerrain[i] = "Misty";
 		$("#misty").prop("checked", true);
 		break;
 	case "Psychic Surge":
+	case "Bizzare Blizzard":
 		lastAutoTerrain[i] = "Psychic";
 		$("#psychic").prop("checked", true);
 		break;

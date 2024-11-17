@@ -9485,8 +9485,6 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Zamazenta: {bs: {at: 120}},
   'Zamazenta-Crowned': {bs: {at: 120, df: 140, sd: 140}},
   Accelgor: {otherFormes: ['Accelgor-Mega']},
-  Bellibolt: {otherFormes: ['Bellibolt-Mega']},
-  Bombirdier: {otherFormes: ['Bombirdier-Mega']},
   Clawitzer: {otherFormes: ['Clawitzer-Mega']},
   Donphan: {otherFormes: ['Donphan-Mega']},
   Electivire: {otherFormes: ['Electivire-Mega']},
@@ -9502,8 +9500,6 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Shiftry: {otherFormes: ['Shiftry-Mega']},
   Skarmory: {otherFormes: ['Skarmory-Mega']},
   Swalot: {otherFormes: ['Swalot-Mega']}, 
-  Tatsugiri: {otherFormes: ['Tatsugiri-Mega']}, 
-  Tinkaton: {otherFormes: ['Tinkaton-Mega']}, 
   Victreebel: {otherFormes: ['Victreebel-Mega']}, 
   Whimsicott: {otherFormes: ['Whimsicott-Mega']}, 
   Xatu: {otherFormes: ['Xatu-Mega']},   
@@ -9512,11 +9508,9 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
   Carbink: {otherFormes: ['Carbink-Mega']},
   Dragalge: {otherFormes: ['Dragalge-Mega']},
   Eelektross: {otherFormes: ['Eelektross-Mega']},
-  Farigiraf: {otherFormes: ['Farigiraf-Mega']},
   Ferrothorn: {otherFormes: ['Ferrothorn-Mega']},
   Magnezone: {otherFormes: ['Magnezone-Mega']},
   Raichu: {otherFormes: ['Raichu-Mega']},
-  Revavroom: {otherFormes: ['Revavroom-Mega']},
   Talonflame: {otherFormes: ['Talonflame-Mega']},
   Tropius: {otherFormes: ['Tropius-Mega']},
   Ababo: {
@@ -9568,12 +9562,14 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 109, at: 64, df: 91, sa: 103, sd: 83, sp: 45},
     weightkg: 113,
     abilities: {0: 'Electromorphosis'},
+    otherFormes: ['Bellibolt-Mega'],
   },
   Bombirdier: {
     types: ['Flying', 'Dark'],
     bs: {hp: 70, at: 103, df: 85, sa: 60, sd: 85, sp: 82},
     weightkg: 42.9,
     abilities: {0: 'Big Pecks'},
+    otherFormes: ['Bombirdier-Mega'],
   },
   Brambleghast: {
     types: ['Grass', 'Ghost'],
@@ -9724,6 +9720,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 120, at: 90, df: 70, sa: 110, sd: 70, sp: 60},
     weightkg: 160,
     abilities: {0: 'Cud Chew'},
+    otherFormes: ['Farigiraf-Mega'],
   },
   Fezandipiti: {
     types: ['Poison', 'Fairy'],
@@ -10244,6 +10241,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 80, at: 119, df: 90, sa: 54, sd: 67, sp: 90},
     weightkg: 120,
     abilities: {0: 'Overcoat'},
+    otherFormes: ['Revavroom-Mega'],
   },
   'Roaring Moon': {
     types: ['Dragon', 'Dark'],
@@ -10390,6 +10388,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 68, at: 50, df: 60, sa: 120, sd: 95, sp: 82},
     weightkg: 8,
     abilities: {0: 'Commander'},
+    otherFormes: ['Tatsugiri-Mega'],
   },
   'Tauros-Paldea-Aqua': {
     types: ['Fighting', 'Water'],
@@ -10455,6 +10454,7 @@ const SV_PATCH: {[name: string]: DeepPartial<SpeciesData>} = {
     bs: {hp: 85, at: 75, df: 77, sa: 70, sd: 105, sp: 94},
     weightkg: 112.8,
     abilities: {0: 'Mold Breaker'},
+    otherFormes: ['Tinkaton-Mega'],
   },
   Tinkatuff: {
     types: ['Fairy', 'Steel'],

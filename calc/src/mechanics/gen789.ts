@@ -1656,7 +1656,7 @@ export function calculateDfModsSMSSSV(
   }
   if(attacker.hasAbility('Deadly Precision')){
     desc.attackerAbility = attacker.ability;
-    dfMods.push(3072);
+    dfMods.push(3276);
   }
 
   if (isQPActive(defender, field)) {
@@ -1680,9 +1680,10 @@ export function calculateDfModsSMSSSV(
   ) {
     dfMods.push(8192);
     desc.defenderItem = defender.item;
-  } else if (defender.hasAbility('Pristine Armor'))
+  } else if (defender.hasAbility('Pristine Armor')) {
     dfMods.push(5120)
     desc.defenderAbility = defender.ability;
+  }
   return dfMods;
 }
 

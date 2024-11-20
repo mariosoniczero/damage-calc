@@ -347,6 +347,7 @@ function autosetWeather(ability, i) {
 		$("#sun").prop("checked", true);
 		break;
 	case "Drizzle":
+	case "Thunderstorm":
 		lastAutoWeather[i] = "Rain";
 		$("#rain").prop("checked", true);
 		break;
@@ -404,6 +405,7 @@ function autosetTerrain(ability, i) {
 	$("input:checkbox[name='terrain']:checked").prop("checked", false);
 	switch (ability) {
 	case "Electric Surge":
+	case "Thunderstorm":
 	case "Hadron Engine":
 		lastAutoTerrain[i] = "Electric";
 		$("#electric").prop("checked", true);

@@ -1433,7 +1433,7 @@ export function calculateAtModsSMSSSV(
     (attacker.hasAbility('Dragon\'s Maw') && move.hasType('Dragon')) ||
     (attacker.hasAbility('Rocky Payload') && move.hasType('Rock')) ||
     (attacker.hasAbility('Anemochory') && move.hasType('Flying')) ||
-    (attacker.hasAbility('Elemental Mastery') && move.hasType('Electric') || move.hasType('Ice') || move.hasType('Fire')) 
+    (attacker.hasAbility('Elemental Mastery') && (move.hasType('Electric') || move.hasType('Ice') || move.hasType('Fire'))) 
   ) {
     atMods.push(6144);
     desc.attackerAbility = attacker.ability;
